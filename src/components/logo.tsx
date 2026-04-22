@@ -1,0 +1,27 @@
+import React from "react";
+
+export const Logo = ({ isDark }: { isDark: boolean }) => {
+  return (
+    <div className="flex items-center gap-2">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="18"
+        height="18"
+        viewBox="0 0 18 18"
+        fill={`${isDark ? "#09090B" : "#fff"}`}
+      >
+        <path
+          d="M4.66667 0.5V17.1667M13 0.5V17.1667M0.5 8.83333H17.1667M0.5 4.66667H4.66667M0.5 13H4.66667M13 13H17.1667M13 4.66667H17.1667M2.31667 0.5H15.35C16.3533 0.5 17.1667 1.31335 17.1667 2.31667V15.35C17.1667 16.3533 16.3533 17.1667 15.35 17.1667H2.31667C1.31335 17.1667 0.5 16.3533 0.5 15.35V2.31667C0.5 1.31335 1.31335 0.5 2.31667 0.5Z"
+          stroke={`${isDark ? "#fff" : "#4338CA"}`}
+          strokeLinecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+      <span
+        className={`text-[16px] font-bold italic ${isDark ? "text-white" : "text-indigo-700"}`}
+      >
+        Movie Z
+      </span>
+    </div>
+  );
+};
