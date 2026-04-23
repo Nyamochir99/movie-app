@@ -1,5 +1,6 @@
 "use client";
 import { Nav } from "@/components/nav";
+import { SwiperMain } from "@/components/swiper";
 import { useState } from "react";
 
 export default function Home() {
@@ -12,7 +13,12 @@ export default function Home() {
     <div
       className={`flex flex-col h-screen w-full ${isDark ? "bg-[#09090B]" : "bg-white"}`}
     >
-      <Nav isDark={isDark} handleTheme={handleTheme} />
+      <div className="relative z-20">
+        <Nav isDark={isDark} handleTheme={handleTheme} />
+      </div>
+      <div className=" relative z-10">
+        <SwiperMain />
+      </div>
     </div>
   );
 }

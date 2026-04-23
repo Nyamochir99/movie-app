@@ -17,11 +17,7 @@ export const BadgeSVG = ({
       }}
       className={`flex items-center justify-center gap-2px py-0.5 px-2.5 border rounded-full cursor-pointer ${isActive ? "border-[#18181B] bg-[#18181B] text-[#FAFAFA]" : `${isDark ? "border-[#27272a] text-[#fafafa]" : "border-[#E4E4E7] text-[#09090B]"}`}`}
     >
-      <div
-        className={`text-[12px] leading-4 font-semibold ${isDark ? "text-[#FAFAFA]" : "text-[#09090B]"}`}
-      >
-        {genre}
-      </div>
+      <div className={`text-[12px] leading-4 font-semibold`}>{genre}</div>
       {isActive ? (
         <div className="w-4 h-4 flex justify-center items-center">
           <svg
@@ -33,7 +29,7 @@ export const BadgeSVG = ({
           >
             <path
               d="M8.5 0.5L0.5 8.5M0.5 0.5L8.5 8.5"
-              stroke="#E4E4E7"
+              stroke="#FAFAFA"
               strokeLinecap="round"
               strokeLinejoin="round"
             />

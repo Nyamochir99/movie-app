@@ -2,22 +2,34 @@
 import React, { useEffect, useState } from "react";
 import { BadgeSVG } from "./badgeSVG";
 import { Badge } from "./badge";
-import { Genres } from "@/app/types";
+import { Genres, SearchMovie } from "@/app/types";
 import axios from "axios";
+import { Span } from "next/dist/trace";
+import { MovieSearch } from "./movieSearch";
 
 export const SearchNav = ({ isDark }: { isDark: boolean }) => {
   const [isActive, setIsActive] = useState<boolean>(false);
   const [genres, setGenres] = useState<Genres[]>([]);
+  const [search, setSearch] = useState<string>("");
+  const [movies, setMovies] = useState<SearchMovie[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    axios
-      .get(
-        `https://api.themoviedb.org/3/genre/movie/list?api_key=0bfe54d2ee447174877d5dffda1a2713`,
-      )
-      .then((res) => {
+    let url =
+      "https://api.themoviedb.org/3/genre/movie/list?api_key=0bfe54d2ee447174877d5dffda1a2713";
+    if (search) {
+      url = `https://api.themoviedb.org/3/search/movie?query=${search}&api_key=0bfe54d2ee447174877d5dffda1a2713`;
+    }
+    axios.get(url).then((res) => {
+      if (search) {
+        setMovies(res.data.results);
+        setIsActive(false);
+      } else {
         setGenres(res.data.genres);
-      });
-  }, []);
+      }
+      setLoading(false);
+    });
+  }, [search]);
 
   return (
     <div className="relative">
@@ -64,7 +76,15 @@ export const SearchNav = ({ isDark }: { isDark: boolean }) => {
             </svg>
           </span>
           <input
-            className={`h-9 w-94.75 border rounded-lg pr-3 pl-9.5 ${isDark ? "border-[#fafafa] text-[#18181B] placeholder-[#a1a1aa]" : "border-[#E4E4E7] text-[#18181B] placeholder-[#71717A]"}`}
+            onBlur={() => setSearch("")}
+            onClick={(e) => {
+              setIsActive(false);
+              setSearch(e.target.value);
+            }}
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+            className={`h-9 w-94.75 border rounded-lg pr-3 pl-9.5 ${isDark ? "border-[#fafafa] text-[#fafafa] placeholder-[#a1a1aa]" : "border-[#E4E4E7] text-[#18181B] placeholder-[#71717A]"}`}
             type="text"
             placeholder="Search..."
           />
@@ -90,6 +110,38 @@ export const SearchNav = ({ isDark }: { isDark: boolean }) => {
               {genres.map((genre) => (
                 <BadgeSVG genre={genre.name} key={genre.id} isDark={isDark} />
               ))}
+            </div>
+          </div>
+        </div>
+      )}
+      {search && !isActive && (
+        <div className="absolute top-10 -left-9.5">
+          <div
+            className={`w-144.25 p-3 rounded-lg border min-h-24 flex flex-col ${isDark ? "border-[#27272a] bg-[#09090B]" : "border-[#e4e4e7] bg-white"}`}
+          >
+            <div
+              className={`divide-y ${isDark ? "divide-[#27272A]" : "divide-[#E4E4E7]"}`}
+            >
+              {loading ? (
+                <>
+                  <div className="flex h-18 items-center justify-center bg-white">
+                    <div className="h-8 w-8 animate-spin rounded-full border-4 border-zinc-300" />
+                  </div>
+                </>
+              ) : (
+                <>
+                  {movies.length === 0 && (
+                    <div
+                      className={`flex items-center justify-center h-18 text-[14px] font-medium ${isDark ? "text-[#FAFAFA]" : "text-[#09090B]"}`}
+                    >
+                      No results found.
+                    </div>
+                  )}
+                  {movies.slice(0, 5).map((movie) => (
+                    <MovieSearch movie={movie} key={movie.id} isDark={isDark} />
+                  ))}
+                </>
+              )}
             </div>
           </div>
         </div>

@@ -1,0 +1,41 @@
+/* 1. Сумнуудын стиль (Цагаан дугуй, хар сум) */
+.swiper-button-next,
+.swiper-button-prev {
+  background-color: white !important; /* Цагаан бөөрөнхий дэвсгэр */
+  width: 45px !important; /* Хэмжээ */
+  height: 45px !important;
+  border-radius: 50% !important; /* Бөөрөнхий болгох */
+  color: black !important; /* Доторх сумны өнгө */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Үл ялиг сүүдэр */
+}
+
+/* Сумны хэмжээг жижигсгэх (текст биш учир :after дээр бичнэ) */
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 18px !important;
+  font-weight: bold;
+}
+
+/* 2. Доорх цэгүүдийн стиль (Pagination) */
+.swiper-pagination-bullet {
+  background-color: white !important; /* Цэгний өнгө */
+  opacity: 0.5; /* Идэвхгүй үеийн тунгалаг байдал */
+  width: 8px;
+  height: 8px;
+}
+
+/* Идэвхтэй байгаа цэгний стиль */
+.swiper-pagination-bullet-active {
+  opacity: 1 !important;
+  width: 8px !important; /* Идэвхтэй цэгийг урт болгох (Зураг дээрх шиг) */
+  border-radius: 5px !important;
+  transition: width 0.3s ease; /* Солигдох үед зөөлөн харагдуулах */
+}
+
+/* Хэрэв сумнуудыг захаас нь бага зэрэг холдуулахыг хүсвэл: */
+.swiper-button-next {
+  right: 20px !important;
+}
+.swiper-button-prev {
+  left: 20px !important;
+}
