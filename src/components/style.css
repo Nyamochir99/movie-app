@@ -2,18 +2,12 @@
 .swiper-button-next,
 .swiper-button-prev {
   background-color: white !important; /* Цагаан бөөрөнхий дэвсгэр */
-  width: 45px !important; /* Хэмжээ */
-  height: 45px !important;
+  width: 40px !important; /* Хэмжээ */
+  height: 40px !important;
+  padding: 14px 16px;
   border-radius: 50% !important; /* Бөөрөнхий болгох */
   color: black !important; /* Доторх сумны өнгө */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Үл ялиг сүүдэр */
-}
-
-/* Сумны хэмжээг жижигсгэх (текст биш учир :after дээр бичнэ) */
-.swiper-button-next:after,
-.swiper-button-prev:after {
-  font-size: 18px !important;
-  font-weight: bold;
 }
 
 /* 2. Доорх цэгүүдийн стиль (Pagination) */
@@ -27,15 +21,18 @@
 /* Идэвхтэй байгаа цэгний стиль */
 .swiper-pagination-bullet-active {
   opacity: 1 !important;
-  width: 8px !important; /* Идэвхтэй цэгийг урт болгох (Зураг дээрх шиг) */
+  width: 20px !important; /* Идэвхтэй цэгийг урт болгох (Зураг дээрх шиг) */
   border-radius: 5px !important;
   transition: width 0.3s ease; /* Солигдох үед зөөлөн харагдуулах */
 }
 
 /* Хэрэв сумнуудыг захаас нь бага зэрэг холдуулахыг хүсвэл: */
 .swiper-button-next {
-  right: 20px !important;
+  right: 44px !important;
 }
 .swiper-button-prev {
-  left: 20px !important;
+  left: 44px !important;
+}
+.swiper-pagination {
+  bottom: 37px !important;
 }
