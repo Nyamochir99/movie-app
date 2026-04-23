@@ -79,7 +79,7 @@ export const SearchNav = ({ isDark }: { isDark: boolean }) => {
             onBlur={() => setSearch("")}
             onClick={(e) => {
               setIsActive(false);
-              setSearch(e.target.value);
+              setSearch(e.currentTarget.value);
             }}
             onChange={(e) => {
               setSearch(e.target.value);
