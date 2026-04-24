@@ -3,6 +3,16 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSwiper } from "swiper/react";
 
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
 export const SwiperMovie = ({ movie }: { movie: SearchMovie }) => {
   const [trailer, setTrailer] = useState<TrailerResult[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -20,6 +30,18 @@ export const SwiperMovie = ({ movie }: { movie: SearchMovie }) => {
         setLoading(false);
       });
   }, [movie.id]);
+
+  const handlePlayer = (open: boolean) => {
+    setPlayer(open);
+    if (swiper) {
+      if (open) {
+        swiper.autoplay.stop();
+      } else {
+        swiper.autoplay.start();
+      }
+    }
+  };
+
   if (loading) {
     return (
       <div className="w-full h-150 flex items-center justify-center">
@@ -27,15 +49,16 @@ export const SwiperMovie = ({ movie }: { movie: SearchMovie }) => {
       </div>
     );
   }
+  const trailerKey = trailer.length > 1 ? trailer[1]?.key : trailer[0]?.key;
 
   return (
     <div
-      className="w-full h-200 bg-cover bg-center bg-no-repeat flex items-center"
+      className="w-full h-220 bg-cover bg-center bg-no-repeat flex items-center justify-center relative"
       style={{
         backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,
       }}
     >
-      <div className="flex flex-col gap-4 ml-35 items-start">
+      <div className="flex flex-col gap-4 w-7xl items-start">
         <div className="flex flex-col items-start">
           <div className="text-base font-normal text-white">Now Playing:</div>
           <div className="text-[36px] leading-10 font-bold text-white cursor-pointer">
@@ -68,53 +91,58 @@ export const SwiperMovie = ({ movie }: { movie: SearchMovie }) => {
         <div className="w-75.5 text-xs font-normal text-[#FAFAFA]">
           {movie.overview}
         </div>
-        <div className="flex gap-2 justify-center items-center h-10 w-36.25 bg-[#F4F4F5] cursor-pointer rounded-md">
-          <div className="flex items-center justify-center h-4 w-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="11"
-              height="13"
-              viewBox="0 0 11 13"
-              fill="none"
-            >
-              <path
-                d="M0.5 0.5L9.83333 6.5L0.5 12.5V0.5Z"
-                stroke="#18181B"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
-          <div
-            onClick={() => {
-              setPlayer(true);
-              if (swiper) {
-                swiper.autoplay.stop();
-              }
-            }}
-            className="text-sm font-medium text-[#18181B] "
+
+        <Dialog open={player} onOpenChange={handlePlayer}>
+          <DialogTrigger asChild>
+            <div className="flex gap-2 justify-center items-center h-10 w-36.25 bg-[#F4F4F5] cursor-pointer rounded-md">
+              <div className="flex items-center justify-center h-4 w-4">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="11"
+                  height="13"
+                  viewBox="0 0 11 13"
+                  fill="none"
+                >
+                  <path
+                    d="M0.5 0.5L9.83333 6.5L0.5 12.5V0.5Z"
+                    stroke="#18181B"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+              <div className="text-sm font-medium text-[#18181B] ">
+                Watch Trailer
+              </div>
+            </div>
+          </DialogTrigger>
+          <DialogContent
+            className="fixed top-1/2 left-1/2 -translate-x-4/3 -translate-y-1/2 max-w-5xl w-[90vw] p-0 bg-black border-none z-100"
+            showCloseButton={false}
           >
-            Watch Trailer
-          </div>
-        </div>
+            <DialogTitle className="sr-only">
+              Watch {movie.title} Trailer
+            </DialogTitle>
+            {trailerKey ? (
+              <div className="h-150 aspect-video">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1`}
+                  title="YouTube video player"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="rounded-md"
+                ></iframe>
+              </div>
+            ) : (
+              <div className="text-white p-10 text-center">
+                Trailer not available
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
       </div>
-      {player && (
-        <div className="relative">
-          <iframe
-            width="997"
-            height="561"
-            src={`https://www.youtube.com/embed/${trailer[1].key}`}
-            title="YouTube video player"
-          ></iframe>
-          <div
-            className="absolute -top-20 -right-20 rounded-full bg-white cursor-pointer h-10 w-10 z-20"
-            onClick={() => {
-              setPlayer(false);
-              swiper.autoplay.start();
-            }}
-          ></div>
-        </div>
-      )}
     </div>
   );
 };

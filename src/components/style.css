@@ -21,9 +21,8 @@
 /* Идэвхтэй байгаа цэгний стиль */
 .swiper-pagination-bullet-active {
   opacity: 1 !important;
-  width: 20px !important; /* Идэвхтэй цэгийг урт болгох (Зураг дээрх шиг) */
+  width: 25px !important; /* Идэвхтэй цэгийг урт болгох (Зураг дээрх шиг) */
   border-radius: 5px !important;
-  transition: width 0.3s ease; /* Солигдох үед зөөлөн харагдуулах */
 }
 
 /* Хэрэв сумнуудыг захаас нь бага зэрэг холдуулахыг хүсвэл: */

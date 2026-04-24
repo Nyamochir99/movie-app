@@ -11,7 +11,7 @@ export const Nav = ({
   handleTheme: () => void;
 }) => {
   return (
-    <div className="w-full h-15 flex items-center px-20 justify-between">
+    <div className="w-7xl h-15 flex items-center justify-between">
       <Logo isDark={isDark} />
       <SearchNav isDark={isDark} />
       <ThemeButton isDark={isDark} handleTheme={handleTheme} />
