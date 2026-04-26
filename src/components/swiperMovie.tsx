@@ -53,7 +53,7 @@ export const SwiperMovie = ({ movie }: { movie: SearchMovie }) => {
 
   return (
     <div
-      className="w-full h-220 bg-cover bg-center bg-no-repeat flex items-center justify-center relative"
+      className="w-full h-150 bg-cover bg-center bg-no-repeat flex items-center justify-center relative"
       style={{
         backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,
       }}
@@ -128,7 +128,7 @@ export const SwiperMovie = ({ movie }: { movie: SearchMovie }) => {
                 <iframe
                   width="100%"
                   height="100%"
-                  src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1`}
+                  src={`https://www.youtube.com/embed/${trailerKey}?autoplay=0`}
                   title="YouTube video player"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen

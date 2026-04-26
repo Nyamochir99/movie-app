@@ -1,14 +1,16 @@
 import React from "react";
 import { Logo } from "./logo";
 
-export const Footer = () => {
+export const Footer = ({ isDark }: { isDark: boolean }) => {
   return (
-    <div className={`w-full h-70 py-10 bg-[#4338CA] flex justify-center`}>
+    <div
+      className={`w-full h-70 py-10 flex justify-center ${isDark ? "bg-[#27272A]" : "bg-[#4338CA]"}`}
+    >
       <div className="flex w-7xl justify-between">
         <div className="flex flex-col justify-start gap-3">
           <Logo isDark={true} />
           <div className="text-[#FAFAFA] text-sm font-normal">
-            © 2024 Movie Z. All Rights Reserved.
+            © 2026 Movie Z. All Rights Reserved.
           </div>
         </div>
         <div className="flex gap-24 text-[#FAFAFA] text-sm font-normal">
