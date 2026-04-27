@@ -1,4 +1,5 @@
 import { SearchMovie } from "@/app/types";
+import Link from "next/link";
 import React from "react";
 
 export const MoiveCard = ({
@@ -9,7 +10,8 @@ export const MoiveCard = ({
   isDark: boolean;
 }) => {
   return (
-    <div
+    <Link
+      href={`/movie/${movie.id}`}
       className={`w-57.5 cursor-pointer flex flex-col gap-1 rounded-lg items-start overflow-hidden ${isDark ? "bg-[#27272A]" : "bg-[#F4F4F5]"}`}
     >
       <img
@@ -53,6 +55,6 @@ export const MoiveCard = ({
           {movie.title}
         </div>
       </div>
-    </div>
+    </Link>
   );
 };

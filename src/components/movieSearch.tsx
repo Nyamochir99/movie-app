@@ -1,4 +1,5 @@
 import { SearchMovie } from "@/app/types";
+import Link from "next/link";
 import React from "react";
 
 export const MovieSearch = ({
@@ -9,7 +10,10 @@ export const MovieSearch = ({
   isDark: boolean;
 }) => {
   return (
-    <div className="w-full flex gap-4 p-2">
+    <Link
+      href={`/movie/${movie.id}`}
+      className={`w-full flex gap-4 p-2 cursor-pointer border-b pb-4 mb-2 ${isDark ? "border-b-[#27272A]" : "border-b-[#E4E4E7]"}`}
+    >
       <img
         className="w-17 h-25 object-cover rounded-md overflow-hidden cursor-pointer"
         src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -83,6 +87,6 @@ export const MovieSearch = ({
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };

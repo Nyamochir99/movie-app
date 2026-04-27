@@ -12,6 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import Link from "next/link";
 
 export const SwiperMovie = ({ movie }: { movie: SearchMovie }) => {
   const [trailer, setTrailer] = useState<TrailerResult[]>([]);
@@ -26,7 +27,10 @@ export const SwiperMovie = ({ movie }: { movie: SearchMovie }) => {
         `https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=0bfe54d2ee447174877d5dffda1a2713`,
       )
       .then((res) => {
-        setTrailer(res.data.results);
+        const onlyTrailers = (res.data.results as TrailerResult[]).filter(
+          (video) => video.type === "Trailer" && video.official === true,
+        );
+        setTrailer(onlyTrailers);
         setLoading(false);
       });
   }, [movie.id]);
@@ -61,9 +65,12 @@ export const SwiperMovie = ({ movie }: { movie: SearchMovie }) => {
       <div className="flex flex-col gap-4 w-7xl items-start">
         <div className="flex flex-col items-start">
           <div className="text-base font-normal text-white">Now Playing:</div>
-          <div className="text-[36px] leading-10 font-bold text-white cursor-pointer">
+          <Link
+            href={`/movie/${movie.id}`}
+            className="text-[36px] leading-10 font-bold text-white cursor-pointer"
+          >
             {movie.title}
-          </div>
+          </Link>
           <div className="flex gap-1 h-12">
             <div className="flex justify-center items-center h-7 w-7">
               <svg

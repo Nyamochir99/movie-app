@@ -76,7 +76,7 @@ export const SearchNav = ({ isDark }: { isDark: boolean }) => {
             </svg>
           </span>
           <input
-            onBlur={() => setSearch("")}
+            // onBlur={() => setSearch("")}
             onClick={(e) => {
               setIsActive(false);
               setSearch(e.currentTarget.value);
@@ -84,7 +84,7 @@ export const SearchNav = ({ isDark }: { isDark: boolean }) => {
             onChange={(e) => {
               setSearch(e.target.value);
             }}
-            className={`h-9 w-94.75 border rounded-lg pr-3 pl-9.5 ${isDark ? "border-[#fafafa] text-[#fafafa] placeholder-[#a1a1aa]" : "border-[#E4E4E7] text-[#18181B] placeholder-[#71717A]"}`}
+            className={`h-9 w-94.75 border rounded-lg pr-3 pl-9.5 ${isDark ? "border-[#27272A] text-[#fafafa] placeholder-[#a1a1aa]" : "border-[#E4E4E7] text-[#18181B] placeholder-[#71717A]"}`}
             type="text"
             placeholder="Search..."
           />
@@ -119,9 +119,7 @@ export const SearchNav = ({ isDark }: { isDark: boolean }) => {
           <div
             className={`w-144.25 p-3 rounded-lg border min-h-24 flex flex-col ${isDark ? "border-[#27272a] bg-[#09090B]" : "border-[#e4e4e7] bg-white"}`}
           >
-            <div
-              className={`divide-y ${isDark ? "divide-[#27272A]" : "divide-[#E4E4E7]"}`}
-            >
+            <div>
               {loading ? (
                 <>
                   <div className="flex h-18 items-center justify-center bg-white">
@@ -140,6 +138,11 @@ export const SearchNav = ({ isDark }: { isDark: boolean }) => {
                   {movies.slice(0, 5).map((movie) => (
                     <MovieSearch movie={movie} key={movie.id} isDark={isDark} />
                   ))}
+                  <div
+                    className={`text-sm cursor-pointer font-medium py-2 px-4 ${isDark ? "text-[#FAFAFA]" : "text-[#09090B]"}`}
+                  >
+                    See all results for "{search}"
+                  </div>
                 </>
               )}
             </div>

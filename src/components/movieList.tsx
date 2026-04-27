@@ -1,4 +1,4 @@
-import { SearchMovie } from "@/app/types";
+import { SearchMovie, SimilarMovie } from "@/app/types";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { MoiveCard } from "./moiveCard";
@@ -6,32 +6,54 @@ import { MoiveCard } from "./moiveCard";
 export const MovieList = ({
   listName,
   isDark,
+  movieId,
 }: {
   listName: string;
   isDark: boolean;
+  movieId?: number;
 }) => {
   const [movies, setMovies] = useState<SearchMovie[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    axios
-      .get(
-        `https://api.themoviedb.org/3/movie/${listName}?api_key=0bfe54d2ee447174877d5dffda1a2713`,
-      )
-      .then((res) => {
-        setMovies(res.data.results);
-        setLoading(false);
-      });
-  }, []);
+  const [similar, setSimilar] = useState<SearchMovie[]>([]);
 
   let name = "";
+  let link = "";
   if (listName === "upcoming") {
     name = "Upcoming";
+    link = "upcoming";
   } else if (listName === "popular") {
     name = "Popular";
-  } else {
+    link = "popular";
+  } else if (listName === "top_rated") {
     name = "Top Rated";
+    link = "top_rated";
+  } else {
+    name = "More like this";
   }
+
+  useEffect(() => {
+    if (listName !== "moreLike") {
+      axios
+        .get(
+          `https://api.themoviedb.org/3/movie/${listName}?api_key=0bfe54d2ee447174877d5dffda1a2713`,
+        )
+        .then((res) => {
+          setMovies(res.data.results);
+          setLoading(false);
+        });
+    }
+
+    // 2. movieId нь орж ирсэн (undefined биш) үед л similar дуудах
+    if (movieId) {
+      axios
+        .get(
+          `https://api.themoviedb.org/3/movie/${movieId}/similar?api_key=0bfe54d2ee447174877d5dffda1a2713`,
+        )
+        .then((res) => {
+          setSimilar(res.data.results);
+        });
+    }
+  }, [movieId, listName]);
 
   return (
     <div className="w-7xl flex flex-col gap-8">
@@ -59,19 +81,27 @@ export const MovieList = ({
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-5 gap-[32.5px]">
-        {listName === "upcoming"
-          ? movies
-              .slice(10)
-              .map((movie) => (
-                <MoiveCard movie={movie} isDark={isDark} key={movie.id} />
-              ))
-          : movies
-              .slice(0, 10)
-              .map((movie) => (
-                <MoiveCard movie={movie} isDark={isDark} key={movie.id} />
-              ))}
-      </div>
+      {listName === "moreLike" ? (
+        <div className="flex gap-[32.5px]">
+          {similar.slice(0, 5).map((movie) => (
+            <MoiveCard movie={movie} isDark={isDark} key={movie.id} />
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-5 gap-[32.5px]">
+          {listName === "upcoming"
+            ? movies
+                .slice(10)
+                .map((movie) => (
+                  <MoiveCard movie={movie} isDark={isDark} key={movie.id} />
+                ))
+            : movies
+                .slice(0, 10)
+                .map((movie) => (
+                  <MoiveCard movie={movie} isDark={isDark} key={movie.id} />
+                ))}
+        </div>
+      )}
     </div>
   );
 };

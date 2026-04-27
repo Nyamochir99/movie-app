@@ -1,8 +1,9 @@
+import Link from "next/link";
 import React from "react";
 
 export const Logo = ({ isDark }: { isDark: boolean }) => {
   return (
-    <div className="flex items-center gap-2">
+    <Link href={`/`} className="flex items-center gap-2 cursor-pointer">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="18"
@@ -22,6 +23,6 @@ export const Logo = ({ isDark }: { isDark: boolean }) => {
       >
         Movie Z
       </span>
-    </div>
+    </Link>
   );
 };
