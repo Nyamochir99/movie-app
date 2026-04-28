@@ -27,9 +27,14 @@ export const SwiperMovie = ({ movie }: { movie: SearchMovie }) => {
         `https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=0bfe54d2ee447174877d5dffda1a2713`,
       )
       .then((res) => {
-        const onlyTrailers = (res.data.results as TrailerResult[]).filter(
+        let onlyTrailers = (res.data.results as TrailerResult[]).filter(
           (video) => video.type === "Trailer" && video.official === true,
         );
+        if (onlyTrailers.length === 0) {
+          onlyTrailers = (res.data.results as TrailerResult[]).filter(
+            (video) => video.type === "Trailer",
+          );
+        }
         setTrailer(onlyTrailers);
         setLoading(false);
       });
@@ -133,7 +138,7 @@ export const SwiperMovie = ({ movie }: { movie: SearchMovie }) => {
             {trailerKey ? (
               <div className="h-150 aspect-video">
                 <iframe
-                  width="100%"
+                  width=" 100%"
                   height="100%"
                   src={`https://www.youtube.com/embed/${trailerKey}?autoplay=0`}
                   title="YouTube video player"

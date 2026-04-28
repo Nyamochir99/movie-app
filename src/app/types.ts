@@ -68,6 +68,7 @@ export type CastMember = {
   credit_id: string;
   order: number;
   job: string;
+  department: string;
 };
 
 export type MovieDetails = {

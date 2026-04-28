@@ -36,7 +36,7 @@ export const SearchNav = ({ isDark }: { isDark: boolean }) => {
       <div className="flex items-center gap-3">
         <div
           onClick={() => setIsActive(!isActive)}
-          className={`flex justify-center items-center border rounded-md px-4 py-2 gap-2 h-9 w-24.25 cursor-pointer ${isDark ? "border-[#27272A]" : "border-[#E4E4E7]"}`}
+          className={`flex justify-center items-center border rounded-md px-4 py-2 gap-2 h-9 w-24.25 cursor-pointer border-[#E4E4E7]`}
         >
           <span className="h-4 w-4 flex justify-center items-center">
             <svg
@@ -48,15 +48,13 @@ export const SearchNav = ({ isDark }: { isDark: boolean }) => {
             >
               <path
                 d="M0.5 0.5L4.5 4.5L8.5 0.5"
-                stroke={`${isDark ? "#fff" : "#18181B"}`}
+                stroke="#fff"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
             </svg>
           </span>
-          <span
-            className={`text-[14px] font-medium leading-5 ${isDark ? "text-white" : "text-[#18181B]"}`}
-          >
+          <span className={`text-[14px] font-medium leading-5 text-white`}>
             Genre
           </span>
         </div>
@@ -71,7 +69,7 @@ export const SearchNav = ({ isDark }: { isDark: boolean }) => {
             >
               <path
                 d="M4.7998 0.5C7.17456 0.5 9.0995 2.42507 9.09961 4.7998C9.09961 5.81543 8.74857 6.74777 8.16016 7.4834L7.87988 7.83301L11.2236 11.1768C11.23 11.1833 11.2334 11.1917 11.2334 11.2002L11.2236 11.2236C11.2106 11.2365 11.1898 11.2364 11.1768 11.2236L7.83301 7.87988L7.4834 8.16016C6.74777 8.74857 5.81543 9.09961 4.7998 9.09961C2.42507 9.0995 0.5 7.17456 0.5 4.7998C0.500106 2.42514 2.42514 0.500106 4.7998 0.5ZM4.7998 0.566406C2.46195 0.566512 0.566512 2.46195 0.566406 4.7998C0.566406 7.13775 2.46189 9.0331 4.7998 9.0332C7.13781 9.0332 9.0332 7.13781 9.0332 4.7998C9.0331 2.46189 7.13775 0.566406 4.7998 0.566406Z"
-                stroke={`${isDark ? "#a1a1aa" : "#71717A"}`}
+                stroke="#a1a1aa"
               />
             </svg>
           </span>
@@ -84,7 +82,7 @@ export const SearchNav = ({ isDark }: { isDark: boolean }) => {
             onChange={(e) => {
               setSearch(e.target.value);
             }}
-            className={`h-9 w-94.75 border rounded-lg pr-3 pl-9.5 ${isDark ? "border-[#27272A] text-[#fafafa] placeholder-[#a1a1aa]" : "border-[#E4E4E7] text-[#18181B] placeholder-[#71717A]"}`}
+            className={`h-9 w-94.75 border rounded-lg pr-3 pl-9.5 border-[#E4E4E7] text-[#fafafa] placeholder-[#a1a1aa]`}
             type="text"
             placeholder="Search..."
           />

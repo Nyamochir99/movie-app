@@ -2,6 +2,7 @@ import { SearchMovie, SimilarMovie } from "@/app/types";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { MoiveCard } from "./moiveCard";
+import Link from "next/link";
 
 export const MovieList = ({
   listName,
@@ -42,8 +43,6 @@ export const MovieList = ({
           setLoading(false);
         });
     }
-
-    // 2. movieId нь орж ирсэн (undefined биш) үед л similar дуудах
     if (movieId) {
       axios
         .get(
@@ -61,7 +60,12 @@ export const MovieList = ({
         className={`${isDark ? "text-[#FAFAFA]" : "text-[#09090B]"} flex items-center justify-between`}
       >
         <div className="text-2xl font-semibold">{name}</div>
-        <div className="h-9 flex gap-2 items-center justify-center cursor-pointer">
+        <Link
+          href={
+            listName === "moreLike" ? `/cat/${movieId}` : `/cat/${listName}`
+          }
+          className="h-9 flex gap-2 items-center justify-center cursor-pointer"
+        >
           <div className="text-[14px] leading-5 font-medium">See more</div>
           <div className="flex h-4 w-4 items-center justify-center">
             <svg
@@ -79,7 +83,7 @@ export const MovieList = ({
               />
             </svg>
           </div>
-        </div>
+        </Link>
       </div>
       {listName === "moreLike" ? (
         <div className="flex gap-[32.5px]">

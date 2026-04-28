@@ -11,10 +11,14 @@ export const Nav = ({
   handleTheme: () => void;
 }) => {
   return (
-    <div className="w-7xl h-15 flex items-center justify-between">
-      <Logo isDark={isDark} />
-      <SearchNav isDark={isDark} />
-      <ThemeButton isDark={isDark} handleTheme={handleTheme} />
+    <div
+      className={`${isDark ? "bg-[#27272A]" : "bg-[#4338CA]"} flex justify-center w-full`}
+    >
+      <div className={`w-7xl h-15 flex items-center justify-between`}>
+        <Logo isDark={true} />
+        <SearchNav isDark={isDark} />
+        <ThemeButton isDark={isDark} handleTheme={handleTheme} />
+      </div>
     </div>
   );
 };

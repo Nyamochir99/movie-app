@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  CastMember,
-  MovieDetails,
-  SimilarMovie,
-  TrailerResult,
-} from "@/app/types";
+import { CastMember, MovieDetails, TrailerResult } from "@/app/types";
 import { Badge } from "@/components/badge";
 import { Footer } from "@/components/footer";
 import { MovieList } from "@/components/movieList";
@@ -19,7 +14,6 @@ export default function MovieDetail() {
   const [movie, setMovie] = useState<MovieDetails>();
   const [loading, setLoading] = useState<boolean>(true);
   const [trailer, setTrailer] = useState<TrailerResult[]>([]);
-  const [similar, setSimilar] = useState<SimilarMovie[]>([]);
   const [credits, setCredits] = useState<CastMember[]>([]);
 
   useEffect(() => {
@@ -35,17 +29,15 @@ export default function MovieDetail() {
         `https://api.themoviedb.org/3/movie/${id}/videos?api_key=0bfe54d2ee447174877d5dffda1a2713`,
       )
       .then((res) => {
-        const onlyTrailers = (res.data.results as TrailerResult[]).filter(
+        let onlyTrailers = (res.data.results as TrailerResult[]).filter(
           (video) => video.type === "Trailer" && video.official === true,
         );
+        if (onlyTrailers.length === 0) {
+          onlyTrailers = (res.data.results as TrailerResult[]).filter(
+            (video) => video.type === "Trailer",
+          );
+        }
         setTrailer(onlyTrailers);
-      });
-    axios
-      .get(
-        `https://api.themoviedb.org/3/movie/${id}/similar?api_key=0bfe54d2ee447174877d5dffda1a2713`,
-      )
-      .then((res) => {
-        setSimilar(res.data.results);
       });
     axios
       .get(
@@ -71,7 +63,11 @@ export default function MovieDetail() {
       cast.known_for_department === "Directing" && cast.job === "Director",
   );
   const writers = credits.filter(
-    (cast) => cast.known_for_department === "Writing",
+    (cast) =>
+      cast.department === "Writing" &&
+      (cast.job === "Screenplay" ||
+        cast.job === "Novel" ||
+        cast.job === "Writer"),
   );
   const stars = credits.filter(
     (cast) => cast.known_for_department === "Acting",
