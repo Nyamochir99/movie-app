@@ -69,13 +69,23 @@ export const SeeMore = ({
       {listName === "moreLike" ? (
         <div className="grid grid-cols-5 gap-[32.5px]">
           {similar.map((movie) => (
-            <MoiveCard movie={movie} isDark={isDark} key={movie.id} />
+            <MoiveCard
+              isSearch={false}
+              movie={movie}
+              isDark={isDark}
+              key={movie.id}
+            />
           ))}
         </div>
       ) : (
         <div className="grid grid-cols-5 gap-[32.5px]">
           {movies.map((movie) => (
-            <MoiveCard movie={movie} isDark={isDark} key={movie.id} />
+            <MoiveCard
+              isSearch={false}
+              movie={movie}
+              isDark={isDark}
+              key={movie.id}
+            />
           ))}
         </div>
       )}

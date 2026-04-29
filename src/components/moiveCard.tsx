@@ -5,17 +5,19 @@ import React from "react";
 export const MoiveCard = ({
   movie,
   isDark,
+  isSearch,
 }: {
   movie: SearchMovie;
   isDark: boolean;
+  isSearch: boolean;
 }) => {
   return (
     <Link
       href={`/movie/${movie.id}`}
-      className={`w-57.5 cursor-pointer flex flex-col gap-1 rounded-lg items-start overflow-hidden ${isDark ? "bg-[#27272A]" : "bg-[#F4F4F5]"}`}
+      className={`${isSearch ? "w-41.25" : "w-57.5 "} cursor-pointer flex flex-col gap-1 rounded-lg items-start overflow-hidden ${isDark ? "bg-[#27272A]" : "bg-[#F4F4F5]"}`}
     >
       <img
-        className="h-85 w-full object-cover"
+        className={`${isSearch ? "h-61" : "h-85"} w-full object-cover`}
         src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
         alt={movie.title}
       />
@@ -50,7 +52,7 @@ export const MoiveCard = ({
           </div>
         </div>
         <div
-          className={`text-lg font-normal ${isDark ? "text-[#FAFAFA]" : "text-[#09090B]"}`}
+          className={`${isSearch ? "text-base" : "text-lg"} line-clamp-2 font-normal ${isDark ? "text-[#FAFAFA]" : "text-[#09090B]"}`}
         >
           {movie.title}
         </div>

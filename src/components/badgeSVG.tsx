@@ -15,7 +15,7 @@ export const BadgeSVG = ({
       onClick={() => {
         setIsActive(!isActive);
       }}
-      className={`flex items-center justify-center gap-2px py-0.5 px-2.5 border rounded-full cursor-pointer ${isActive ? `bg-[#18181B] text-[#FAFAFA] ${isDark ? "border-[#27272a]" : "border-[#18181B]"}` : `${isDark ? "border-[#27272a] text-[#fafafa]" : "border-[#E4E4E7] text-[#09090B]"}`}`}
+      className={`flex items-center justify-center gap-2px py-0.5 px-2.5 border rounded-full cursor-pointer ${isActive ? ` ${isDark ? "border-[#FAFAFA] bg-[#FAFAFA] text-[#18181B] " : "border-[#18181B] bg-[#18181B] text-[#FAFAFA]"}` : `${isDark ? "border-[#27272a] text-[#fafafa]" : "border-[#E4E4E7] text-[#09090B]"}`}`}
     >
       <div className={`text-[12px] leading-4 font-semibold`}>{genre}</div>
       {isActive ? (
@@ -29,7 +29,7 @@ export const BadgeSVG = ({
           >
             <path
               d="M8.5 0.5L0.5 8.5M0.5 0.5L8.5 8.5"
-              stroke="#FAFAFA"
+              stroke={isDark ? "#18181B" : "#FAFAFA"}
               strokeLinecap="round"
               strokeLinejoin="round"
             />

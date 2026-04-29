@@ -88,7 +88,12 @@ export const MovieList = ({
       {listName === "moreLike" ? (
         <div className="flex gap-[32.5px]">
           {similar.slice(0, 5).map((movie) => (
-            <MoiveCard movie={movie} isDark={isDark} key={movie.id} />
+            <MoiveCard
+              isSearch={false}
+              movie={movie}
+              isDark={isDark}
+              key={movie.id}
+            />
           ))}
         </div>
       ) : (
@@ -97,12 +102,22 @@ export const MovieList = ({
             ? movies
                 .slice(10)
                 .map((movie) => (
-                  <MoiveCard movie={movie} isDark={isDark} key={movie.id} />
+                  <MoiveCard
+                    isSearch={false}
+                    movie={movie}
+                    isDark={isDark}
+                    key={movie.id}
+                  />
                 ))
             : movies
                 .slice(0, 10)
                 .map((movie) => (
-                  <MoiveCard movie={movie} isDark={isDark} key={movie.id} />
+                  <MoiveCard
+                    isSearch={false}
+                    movie={movie}
+                    isDark={isDark}
+                    key={movie.id}
+                  />
                 ))}
         </div>
       )}
