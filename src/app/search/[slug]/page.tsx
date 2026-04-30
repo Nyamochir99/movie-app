@@ -13,7 +13,7 @@ export default function SearchResults() {
   const handleTheme = () => {
     setIsDark(!isDark);
   };
-  const search = String(slug);
+  const search = String(slug).replaceAll("%20", " ");
   return (
     <div
       className={`flex flex-col h-full w-full ${isDark ? "bg-[#09090B]" : "bg-white"}`}
