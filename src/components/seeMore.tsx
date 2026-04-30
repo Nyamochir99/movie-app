@@ -67,34 +67,56 @@ export const SeeMore = ({
         <div className="text-2xl font-semibold">{name}</div>
       </div>
       {listName === "moreLike" ? (
-        <div className="grid grid-cols-5 gap-[32.5px]">
-          {similar.map((movie) => (
-            <MoiveCard
-              isSearch={false}
-              movie={movie}
-              isDark={isDark}
-              key={movie.id}
-            />
-          ))}
-        </div>
+        <>
+          {similar.length === 0 ? (
+            <>
+              <div
+                className={`w-full h-110 rounded-lg my-10 flex justify-center items-center text-[14px] leading-3.5 font-medium border ${isDark ? "border-[#27272A]" : "border-[#E4E4E7]"}`}
+              >
+                No movie found.
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="grid grid-cols-5 gap-[32.5px]">
+                {similar.map((movie) => (
+                  <MoiveCard
+                    isSearch={false}
+                    movie={movie}
+                    isDark={isDark}
+                    key={movie.id}
+                  />
+                ))}
+              </div>
+              <PaginationMovie
+                isDark={isDark}
+                totalPages={totalPages}
+                currentPage={page}
+                onPageChange={(newPage) => setPage(newPage)}
+              />
+            </>
+          )}
+        </>
       ) : (
-        <div className="grid grid-cols-5 gap-[32.5px]">
-          {movies.map((movie) => (
-            <MoiveCard
-              isSearch={false}
-              movie={movie}
-              isDark={isDark}
-              key={movie.id}
-            />
-          ))}
-        </div>
+        <>
+          <div className="grid grid-cols-5 gap-[32.5px]">
+            {movies.map((movie) => (
+              <MoiveCard
+                isSearch={false}
+                movie={movie}
+                isDark={isDark}
+                key={movie.id}
+              />
+            ))}
+          </div>
+          <PaginationMovie
+            isDark={isDark}
+            totalPages={totalPages}
+            currentPage={page}
+            onPageChange={(newPage) => setPage(newPage)}
+          />
+        </>
       )}
-      <PaginationMovie
-        isDark={isDark}
-        totalPages={totalPages}
-        currentPage={page}
-        onPageChange={(newPage) => setPage(newPage)}
-      />
     </div>
   );
 };

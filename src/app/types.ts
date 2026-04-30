@@ -135,3 +135,10 @@ export type MovieDetails = {
   vote_average: number;
   vote_count: number;
 };
+
+export type MovieResponse = {
+  page: number;
+  results: SearchMovie[];
+  total_pages: number;
+  total_results: number;
+};

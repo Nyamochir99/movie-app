@@ -6,13 +6,17 @@ import { Genres, SearchMovie } from "@/app/types";
 import axios from "axios";
 import { Span } from "next/dist/trace";
 import { MovieSearch } from "./movieSearch";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export const SearchNav = ({ isDark }: { isDark: boolean }) => {
+  const router = useRouter();
   const [isActive, setIsActive] = useState<boolean>(false);
   const [genres, setGenres] = useState<Genres[]>([]);
   const [search, setSearch] = useState<string>("");
   const [movies, setMovies] = useState<SearchMovie[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [activeGenres, setActiveGenres] = useState<number[]>([]);
 
   useEffect(() => {
     let url =
@@ -30,6 +34,21 @@ export const SearchNav = ({ isDark }: { isDark: boolean }) => {
       setLoading(false);
     });
   }, [search]);
+
+  const handleGenre = (genreId: number) => {
+    setActiveGenres((prev) => {
+      if (prev.includes(genreId)) {
+        return prev.filter((id) => id !== genreId);
+      }
+      return [...prev, genreId];
+    });
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      router.push(`/search/${search}`);
+    }
+  };
 
   return (
     <div className="relative">
@@ -75,6 +94,7 @@ export const SearchNav = ({ isDark }: { isDark: boolean }) => {
           </span>
           <input
             // onBlur={() => setSearch("")}
+            onKeyDown={handleKeyDown}
             onClick={(e) => {
               setIsActive(false);
               setSearch(e.currentTarget.value);
@@ -82,7 +102,7 @@ export const SearchNav = ({ isDark }: { isDark: boolean }) => {
             onChange={(e) => {
               setSearch(e.target.value);
             }}
-            className={`h-9 w-94.75 border rounded-lg pr-3 pl-9.5 border-[#E4E4E7] text-[#fafafa] placeholder-[#a1a1aa]`}
+            className={`h-9 w-94.75 border outline-none rounded-lg pr-3 pl-9.5 border-[#E4E4E7] text-[#fafafa] placeholder-[#a1a1aa]`}
             type="text"
             placeholder="Search..."
           />
@@ -106,7 +126,18 @@ export const SearchNav = ({ isDark }: { isDark: boolean }) => {
             ></div>
             <div className="flex items-start content-start gap-4 flex-wrap">
               {genres.map((genre) => (
-                <BadgeSVG genre={genre.name} key={genre.id} isDark={isDark} />
+                <Link
+                  href={`/genre/${genre.id}`}
+                  key={genre.id}
+                  className="block"
+                >
+                  <BadgeSVG
+                    genre={genre.name}
+                    isDark={isDark}
+                    onClick={() => handleGenre(genre.id)}
+                    isActive={activeGenres.includes(genre.id)}
+                  />
+                </Link>
               ))}
             </div>
           </div>
@@ -136,11 +167,12 @@ export const SearchNav = ({ isDark }: { isDark: boolean }) => {
                   {movies.slice(0, 5).map((movie) => (
                     <MovieSearch movie={movie} key={movie.id} isDark={isDark} />
                   ))}
-                  <div
+                  <Link
+                    href={`/search/${search}`}
                     className={`text-sm cursor-pointer font-medium py-2 px-4 ${isDark ? "text-[#FAFAFA]" : "text-[#09090B]"}`}
                   >
                     See all results for "{search}"
-                  </div>
+                  </Link>
                 </>
               )}
             </div>

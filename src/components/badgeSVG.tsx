@@ -5,16 +5,17 @@ import React, { useState } from "react";
 export const BadgeSVG = ({
   genre,
   isDark,
+  onClick,
+  isActive,
 }: {
   genre: string;
   isDark: boolean;
+  onClick: () => void;
+  isActive: boolean;
 }) => {
-  const [isActive, setIsActive] = useState<boolean>(false);
   return (
     <div
-      onClick={() => {
-        setIsActive(!isActive);
-      }}
+      onClick={onClick}
       className={`flex items-center justify-center gap-2px py-0.5 px-2.5 border rounded-full cursor-pointer ${isActive ? ` ${isDark ? "border-[#FAFAFA] bg-[#FAFAFA] text-[#18181B] " : "border-[#18181B] bg-[#18181B] text-[#FAFAFA]"}` : `${isDark ? "border-[#27272a] text-[#fafafa]" : "border-[#E4E4E7] text-[#09090B]"}`}`}
     >
       <div className={`text-[12px] leading-4 font-semibold`}>{genre}</div>

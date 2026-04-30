@@ -86,16 +86,30 @@ export const MovieList = ({
         </Link>
       </div>
       {listName === "moreLike" ? (
-        <div className="flex gap-[32.5px]">
-          {similar.slice(0, 5).map((movie) => (
-            <MoiveCard
-              isSearch={false}
-              movie={movie}
-              isDark={isDark}
-              key={movie.id}
-            />
-          ))}
-        </div>
+        <>
+          {similar.length === 0 ? (
+            <>
+              <div
+                className={`w-full h-24 rounded-lg my-10 flex justify-center items-center text-[14px] leading-3.5 font-medium border ${isDark ? "border-[#27272A]" : "border-[#E4E4E7]"}`}
+              >
+                No movie found.
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex gap-[32.5px]">
+                {similar.slice(0, 5).map((movie) => (
+                  <MoiveCard
+                    isSearch={false}
+                    movie={movie}
+                    isDark={isDark}
+                    key={movie.id}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+        </>
       ) : (
         <div className="grid grid-cols-5 gap-[32.5px]">
           {listName === "upcoming"

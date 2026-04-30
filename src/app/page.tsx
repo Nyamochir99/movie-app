@@ -18,7 +18,7 @@ export default function Home() {
       <div className="relative z-20 w-full flex justify-center">
         <Nav isDark={isDark} handleTheme={handleTheme} />
       </div>
-      <div className=" relative z-10 mt-1">
+      <div className=" relative z-10">
         <SwiperMain />
       </div>
       <div className="w-full flex flex-col items-center gap-13 my-13">

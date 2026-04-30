@@ -19,13 +19,15 @@ export default function MovieCategory() {
     <div
       className={`flex flex-col h-full w-full ${isDark ? "bg-[#09090B]" : "bg-white"}`}
     >
-      <div className="relative z-20 w-full flex flex-col items-center">
-        <Nav isDark={isDark} handleTheme={handleTheme} />
-        <SeeMore
-          isDark={isDark}
-          listName={isMovieId ? "moreLike" : name}
-          movieId={isMovieId ? Number(slug) : undefined}
-        />
+      <div className="w-full min-h-screen flex flex-col items-center justify-between">
+        <div className="w-full flex flex-col items-center">
+          <Nav isDark={isDark} handleTheme={handleTheme} />
+          <SeeMore
+            isDark={isDark}
+            listName={isMovieId ? "moreLike" : name}
+            movieId={isMovieId ? Number(slug) : undefined}
+          />
+        </div>
         <Footer isDark={isDark} />
       </div>
     </div>
