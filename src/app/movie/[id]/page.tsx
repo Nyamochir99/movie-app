@@ -5,6 +5,7 @@ import { Badge } from "@/components/badge";
 import { Footer } from "@/components/footer";
 import { MovieList } from "@/components/movieList";
 import { Nav } from "@/components/nav";
+import { useTheme } from "@/context/ThemeContext";
 import axios from "axios";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -15,6 +16,7 @@ export default function MovieDetail() {
   const [loading, setLoading] = useState<boolean>(true);
   const [trailer, setTrailer] = useState<TrailerResult[]>([]);
   const [credits, setCredits] = useState<CastMember[]>([]);
+  const { isDark } = useTheme();
 
   useEffect(() => {
     axios
@@ -51,12 +53,6 @@ export default function MovieDetail() {
       });
   }, [id]);
 
-  const [isDark, setIsDark] = useState<boolean>(false);
-
-  const handleTheme = () => {
-    setIsDark(!isDark);
-  };
-
   const trailerKey = trailer.length > 1 ? trailer[1]?.key : trailer[0]?.key;
   const director = credits.filter(
     (cast) =>
@@ -78,7 +74,7 @@ export default function MovieDetail() {
       className={`flex flex-col h-full w-full ${isDark ? "bg-[#09090B]" : "bg-white"}`}
     >
       <div className="relative z-20 w-full flex justify-center">
-        <Nav isDark={isDark} handleTheme={handleTheme} />
+        <Nav isDark={isDark} />
       </div>
       <div
         className={`w-full flex flex-col mt-13 mb-28 items-center ${isDark ? "text-[#FAFAFA]" : "text-[#09090B]"}`}

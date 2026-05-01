@@ -3,20 +3,17 @@ import { Footer } from "@/components/footer";
 import { MovieList } from "@/components/movieList";
 import { Nav } from "@/components/nav";
 import { SwiperMain } from "@/components/swiper";
+import { useTheme } from "@/context/ThemeContext";
 import { useState } from "react";
 
 export default function Home() {
-  const [isDark, setIsDark] = useState<boolean>(false);
-
-  const handleTheme = () => {
-    setIsDark(!isDark);
-  };
+  const { isDark } = useTheme();
   return (
     <div
       className={`flex flex-col h-full w-full ${isDark ? "bg-[#09090B]" : "bg-white"}`}
     >
       <div className="relative z-20 w-full flex justify-center">
-        <Nav isDark={isDark} handleTheme={handleTheme} />
+        <Nav isDark={isDark} />
       </div>
       <div className=" relative z-10">
         <SwiperMain />

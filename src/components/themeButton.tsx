@@ -1,15 +1,11 @@
+import { useTheme } from "@/context/ThemeContext";
 import React, { useState } from "react";
 
-export const ThemeButton = ({
-  isDark,
-  handleTheme,
-}: {
-  isDark: boolean;
-  handleTheme: () => void;
-}) => {
+export const ThemeButton = () => {
+  const { isDark, toggleTheme } = useTheme();
   return (
     <div
-      onClick={handleTheme}
+      onClick={toggleTheme}
       className={`w-9 h-9 rounded-[10px] flex items-center justify-center border cursor-pointer shadow-sm border-[#E4E4E7]`}
     >
       {isDark ? (
