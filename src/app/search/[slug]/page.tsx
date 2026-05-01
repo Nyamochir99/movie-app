@@ -15,9 +15,11 @@ export default function SearchResults() {
     <div
       className={`flex flex-col h-full w-full ${isDark ? "bg-[#09090B]" : "bg-white"}`}
     >
-      <div className="relative z-20 w-full flex flex-col items-center">
-        <Nav isDark={isDark} />
-        <SearchResultsMovie isDark={isDark} search={search} />
+      <div className="relative z-20 min-h-screen w-full flex flex-col items-center justify-between">
+        <div className="w-full flex flex-col items-center">
+          <Nav isDark={isDark} />
+          <SearchResultsMovie isDark={isDark} search={search} />
+        </div>
         <Footer isDark={isDark} />
       </div>
     </div>
