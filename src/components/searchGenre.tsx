@@ -79,11 +79,11 @@ export const SearchGenre = ({
           </div>
         </div>
         <div
-          className={`border-l mb-10 mx-4 ${isDark ? "border-[#27272A]" : "border-[#e4e4e7]"}`}
+          className={`border-l mb-10 mx-0 ${isDark ? "border-[#27272A]" : "border-[#e4e4e7]"}`}
         ></div>
         <div className="flex flex-col gap-8 w-202">
           <div className="text-xl font-semibold">{`${genreData?.total_results} titles in "${activeGenreNames}"`}</div>
-          <div className="grid grid-cols-4 gap-y-8 gap-x-12">
+          <div className="grid grid-cols-4 gap-y-6 gap-x-6">
             {movies.map((movie) => (
               <MoiveCard
                 isSearch={true}

@@ -15,6 +15,7 @@ import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
 import { SwiperMovie } from "./swiperMovie";
 import { SearchMovie, TrailerResult } from "@/app/types";
 import axios from "axios";
+import { Skeleton } from "./ui/skeleton";
 
 export const SwiperMain = () => {
   const [movies, setMovies] = useState<SearchMovie[]>([]);
@@ -30,38 +31,35 @@ export const SwiperMain = () => {
         setLoading(false);
       });
   }, []);
-  if (loading) {
-    return (
-      <div className="w-full h-150 flex items-center justify-center">
-        Loading...
-      </div>
-    );
-  }
   return (
     <>
-      <Swiper
-        slidesPerView={1}
-        spaceBetween={30}
-        loop={true}
-        centeredSlides={true}
-        autoplay={{
-          delay: 3500,
-          disableOnInteraction: false,
-        }}
-        effect={"fade"}
-        navigation={true}
-        pagination={{
-          clickable: true,
-        }}
-        modules={[EffectFade, Navigation, Pagination, Autoplay]}
-        className="mySwiper w-full"
-      >
-        {movies.slice(0, 10).map((movie) => (
-          <SwiperSlide>
-            <SwiperMovie movie={movie} key={movie.id} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {loading ? (
+        <Skeleton className="h-150 w-full rounded-none" />
+      ) : (
+        <Swiper
+          slidesPerView={1}
+          spaceBetween={30}
+          loop={true}
+          centeredSlides={true}
+          autoplay={{
+            delay: 3500,
+            disableOnInteraction: false,
+          }}
+          effect={"fade"}
+          navigation={true}
+          pagination={{
+            clickable: true,
+          }}
+          modules={[EffectFade, Navigation, Pagination, Autoplay]}
+          className="mySwiper w-full"
+        >
+          {movies.slice(0, 10).map((movie) => (
+            <SwiperSlide>
+              <SwiperMovie movie={movie} key={movie.id} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
     </>
   );
 };

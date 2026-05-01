@@ -18,7 +18,9 @@ export default function MovieCategory() {
     >
       <div className="w-full min-h-screen flex flex-col items-center justify-between">
         <div className="w-full flex flex-col items-center">
-          <Nav isDark={isDark} />
+          <div className="relative z-50 w-full">
+            <Nav isDark={isDark} />
+          </div>
           <SeeMore
             isDark={isDark}
             listName={isMovieId ? "moreLike" : name}

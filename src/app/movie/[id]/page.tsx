@@ -207,6 +207,7 @@ export default function MovieDetail() {
             width="1280"
             height="600"
             allowFullScreen
+            className="my-10"
           ></iframe>
           <MovieList isDark={isDark} listName="moreLike" movieId={movie?.id} />
         </div>

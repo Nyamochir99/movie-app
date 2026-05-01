@@ -14,13 +14,17 @@ export const MoiveCard = ({
   return (
     <Link
       href={`/movie/${movie.id}`}
-      className={`${isSearch ? "w-42.25" : "w-57.5 "} cursor-pointer flex flex-col gap-1 rounded-lg items-start overflow-hidden ${isDark ? "bg-[#27272A]" : "bg-[#F4F4F5]"}`}
+      className={`${isSearch ? "w-46.25" : "w-57.5 "} cursor-pointer flex flex-col gap-1 rounded-lg items-start overflow-hidden ${isDark ? "bg-[#27272A]" : "bg-[#F4F4F5]"}`}
     >
-      <img
-        className={`${isSearch ? "h-55" : "h-85"} w-full object-cover`}
-        src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
-        alt={movie.title}
-      />
+      <div
+        className={`${isSearch ? "h-55" : "h-85"} overflow-hidden m-0 p-0 object-cover`}
+      >
+        <img
+          className={`p-0 m-0 ${isSearch ? "h-55" : "h-85"} object-cover hover:scale-110 transition-transform duration-500`}
+          src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+          alt={movie.title}
+        />
+      </div>
       <div className="w-full h-24 flex flex-col justify-start p-2">
         <div className="flex gap-1 h-6 items-center">
           <div className="flex justify-center items-center h-4 w-4">

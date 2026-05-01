@@ -90,7 +90,7 @@ export const SearchResultsMovie = ({
           )}
         </div>
         <div
-          className={`border-l mb-10 mx-4 ${isDark ? "border-[#27272A]" : "border-[#e4e4e7]"}`}
+          className={`border-l mb-10 mx-0 ${isDark ? "border-[#27272A]" : "border-[#e4e4e7]"}`}
         ></div>
         <div className="flex flex-col gap-5 justify-start w-97 mb-10">
           <div className="text-2xl font-semibold">Genres</div>

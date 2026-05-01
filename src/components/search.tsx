@@ -8,6 +8,7 @@ import { Span } from "next/dist/trace";
 import { MovieSearch } from "./movieSearch";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Skeleton } from "./ui/skeleton";
 
 export const SearchNav = ({ isDark }: { isDark: boolean }) => {
   const router = useRouter();
@@ -19,21 +20,25 @@ export const SearchNav = ({ isDark }: { isDark: boolean }) => {
   const [activeGenres, setActiveGenres] = useState<number[]>([]);
 
   useEffect(() => {
-    let url =
-      "https://api.themoviedb.org/3/genre/movie/list?api_key=0bfe54d2ee447174877d5dffda1a2713";
-    if (search) {
-      url = `https://api.themoviedb.org/3/search/movie?query=${search}&api_key=0bfe54d2ee447174877d5dffda1a2713`;
-    }
-    axios.get(url).then((res) => {
-      if (search) {
+    axios
+      .get(
+        `https://api.themoviedb.org/3/search/movie?query=${search}&api_key=0bfe54d2ee447174877d5dffda1a2713`,
+      )
+      .then((res) => {
         setMovies(res.data.results);
         setIsActive(false);
-      } else {
-        setGenres(res.data.genres);
-      }
-      setLoading(false);
-    });
+        setLoading(false);
+      });
   }, [search]);
+  useEffect(() => {
+    axios
+      .get(
+        "https://api.themoviedb.org/3/genre/movie/list?api_key=0bfe54d2ee447174877d5dffda1a2713",
+      )
+      .then((res) => {
+        setGenres(res.data.genres);
+      });
+  }, []);
 
   const handleGenre = (genreId: number) => {
     setActiveGenres((prev) => {
@@ -150,11 +155,17 @@ export const SearchNav = ({ isDark }: { isDark: boolean }) => {
           >
             <div>
               {loading ? (
-                <>
-                  <div className="flex h-18 items-center justify-center bg-white">
-                    <div className="h-8 w-8 animate-spin rounded-full border-4 border-zinc-300" />
+                <div className="w-full flex gap-4 p-2 mb-2">
+                  <Skeleton className="w-17 h-25 rounded-md" />
+                  <div className="flex flex-col gap-px">
+                    <Skeleton className="h-7 w-30" />
+                    <Skeleton className="h-6 w-17" />
+                    <div className="flex justify-between w-113.5 mt-3">
+                      <Skeleton className="h-5 w-10" />
+                      <Skeleton className="h-5 w-20" />
+                    </div>
                   </div>
-                </>
+                </div>
               ) : (
                 <>
                   {movies.length === 0 && (
