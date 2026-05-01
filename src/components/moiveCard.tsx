@@ -20,7 +20,7 @@ export const MoiveCard = ({
         className={`${isSearch ? "h-55" : "h-85"} overflow-hidden m-0 p-0 object-cover`}
       >
         <img
-          className={`p-0 m-0 ${isSearch ? "h-55" : "h-85"} object-cover hover:scale-110 transition-transform duration-500`}
+          className={`p-0 m-0 ${isSearch ? "w-full" : "h-85"} object-cover hover:scale-110 transition-transform duration-500`}
           src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
           alt={movie.title}
         />
