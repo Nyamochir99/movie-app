@@ -17,9 +17,7 @@ export default function GenreCategory() {
     >
       <div className="w-full min-h-screen flex flex-col items-center justify-between">
         <div className="w-full flex flex-col items-center">
-          <div className="relative z-50">
-            <Nav isDark={isDark} />
-          </div>
+          <Nav isDark={isDark} />
           <SearchGenre isDark={isDark} genre={genre} />
         </div>
         <Footer isDark={isDark} />

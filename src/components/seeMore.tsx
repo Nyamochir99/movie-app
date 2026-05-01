@@ -71,7 +71,7 @@ export const SeeMore = ({
           {similar.length === 0 ? (
             <>
               <div
-                className={`w-full h-110 rounded-lg my-10 flex justify-center items-center text-[14px] leading-3.5 font-medium border ${isDark ? "border-[#27272A]" : "border-[#E4E4E7]"}`}
+                className={`w-full h-110 rounded-lg my-10 flex justify-center items-center text-[14px] leading-3.5 font-medium border ${isDark ? "border-[#27272A] text-[#FAFAFA]" : "text-[#09090B] border-[#E4E4E7]"}`}
               >
                 No movie found.
               </div>
