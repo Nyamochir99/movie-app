@@ -3,12 +3,9 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSwiper } from "swiper/react";
 
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
@@ -53,7 +50,7 @@ export const SwiperMovie = ({ movie }: { movie: SearchMovie }) => {
 
   if (loading) {
     return (
-      <div className="w-full h-64 sm:h-96 md:h-120 lg:h-150 flex items-center justify-center">
+      <div className="w-full h-72 sm:h-96 md:h-120 lg:h-150 flex items-center justify-center text-white/80 text-sm">
         Loading...
       </div>
     );
@@ -62,28 +59,35 @@ export const SwiperMovie = ({ movie }: { movie: SearchMovie }) => {
 
   return (
     <div
-      className="w-full h-64 sm:h-96 md:h-120 lg:h-150 bg-cover bg-center bg-no-repeat flex items-center justify-center relative"
+      className="w-full h-72 sm:h-96 md:h-120 lg:h-150 bg-cover bg-center bg-no-repeat relative overflow-hidden"
       style={{
         backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,
       }}
     >
-      <div className="flex flex-col gap-3 sm:gap-4 w-full max-w-7xl px-4 sm:px-6 lg:px-8 items-start">
-        <div className="flex flex-col items-start">
-          <div className="text-sm sm:text-base font-normal text-white">Now Playing:</div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/55 to-black/20 sm:from-black/80 sm:via-black/40 sm:to-transparent" />
+
+      <div className="relative z-10 h-full w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-end pb-14 sm:justify-center sm:pb-0">
+        <div className="flex flex-col gap-2.5 sm:gap-4 w-full max-w-2xl">
+          <div className="text-xs sm:text-base font-medium text-white/90 tracking-wide">
+            Now Playing
+          </div>
+
           <Link
             href={`/movie/${movie.id}`}
-            className="text-xl sm:text-3xl lg:text-[36px] leading-tight sm:leading-10 font-bold text-white cursor-pointer"
+            className="text-lg sm:text-3xl lg:text-[36px] leading-snug sm:leading-10 font-bold text-white cursor-pointer line-clamp-2 drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]"
           >
             {movie.title}
           </Link>
-          <div className="flex gap-1 h-12">
-            <div className="flex justify-center items-center h-7 w-7">
+
+          <div className="flex items-center gap-1.5">
+            <div className="flex justify-center items-center h-5 w-5 sm:h-7 sm:w-7 shrink-0">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="25"
-                height="24"
+                width="15"
+                height="14"
                 viewBox="0 0 15 14"
                 fill="none"
+                className="sm:w-[25px] sm:h-6"
               >
                 <path
                   d="M7.16667 0.5L9.22667 4.67333L13.8333 5.34667L10.5 8.59333L11.2867 13.18L7.16667 11.0133L3.04667 13.18L3.83333 8.59333L0.5 5.34667L5.10667 4.67333L7.16667 0.5Z"
@@ -94,26 +98,29 @@ export const SwiperMovie = ({ movie }: { movie: SearchMovie }) => {
                 />
               </svg>
             </div>
-            <div className={`text-lg font-normal text-[#FAFAFA]`}>
+            <div className="text-sm sm:text-lg font-medium text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]">
               {movie.vote_average.toFixed(1)}
-              <span className={`font-normal text-[#71717A]`}>/10</span>
+              <span className="font-normal text-white/70">/10</span>
             </div>
           </div>
-        </div>
-        <div className="max-w-full sm:max-w-75.5 text-xs font-normal text-[#FAFAFA] line-clamp-3 sm:line-clamp-none">
-          {movie.overview}
-        </div>
 
-        <Dialog open={player} onOpenChange={handlePlayer}>
-          <DialogTrigger asChild>
-            <div className="flex gap-2 justify-center items-center h-10 w-36.25 bg-[#F4F4F5] cursor-pointer rounded-md">
-              <div className="flex items-center justify-center h-4 w-4">
+          <p className="hidden sm:block max-w-75.5 text-sm font-normal text-white/90 leading-relaxed line-clamp-3">
+            {movie.overview}
+          </p>
+
+          <Dialog open={player} onOpenChange={handlePlayer}>
+            <DialogTrigger asChild>
+              <button
+                type="button"
+                className="mt-1 flex gap-2 justify-center items-center h-10 w-full sm:w-auto sm:min-w-36.25 px-5 bg-white/95 hover:bg-white text-[#18181B] cursor-pointer rounded-md text-sm font-semibold shadow-lg"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="11"
                   height="13"
                   viewBox="0 0 11 13"
                   fill="none"
+                  aria-hidden
                 >
                   <path
                     d="M0.5 0.5L9.83333 6.5L0.5 12.5V0.5Z"
@@ -122,38 +129,36 @@ export const SwiperMovie = ({ movie }: { movie: SearchMovie }) => {
                     strokeLinejoin="round"
                   />
                 </svg>
-              </div>
-              <div className="text-sm font-medium text-[#18181B] ">
                 Watch Trailer
-              </div>
-            </div>
-          </DialogTrigger>
-          <DialogContent
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-5xl w-[95vw] sm:w-[90vw] p-0 bg-black border-none z-100"
-            showCloseButton={false}
-          >
-            <DialogTitle className="sr-only">
-              Watch {movie.title} Trailer
-            </DialogTitle>
-            {trailerKey ? (
-              <div className="w-full aspect-video">
-                <iframe
-                  width=" 100%"
-                  height="100%"
-                  src={`https://www.youtube.com/embed/${trailerKey}?autoplay=0`}
-                  title="YouTube video player"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="rounded-md"
-                ></iframe>
-              </div>
-            ) : (
-              <div className="text-white p-10 text-center">
-                Trailer not available
-              </div>
-            )}
-          </DialogContent>
-        </Dialog>
+              </button>
+            </DialogTrigger>
+            <DialogContent
+              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-5xl w-[95vw] sm:w-[90vw] p-0 bg-black border-none z-100"
+              showCloseButton={false}
+            >
+              <DialogTitle className="sr-only">
+                Watch {movie.title} Trailer
+              </DialogTitle>
+              {trailerKey ? (
+                <div className="w-full aspect-video">
+                  <iframe
+                    width="100%"
+                    height="100%"
+                    src={`https://www.youtube.com/embed/${trailerKey}?autoplay=0`}
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="rounded-md"
+                  />
+                </div>
+              ) : (
+                <div className="text-white p-10 text-center">
+                  Trailer not available
+                </div>
+              )}
+            </DialogContent>
+          </Dialog>
+        </div>
       </div>
     </div>
   );

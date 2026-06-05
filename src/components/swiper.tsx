@@ -34,7 +34,7 @@ export const SwiperMain = () => {
   return (
     <>
       {loading ? (
-        <Skeleton className="h-64 sm:h-96 md:h-120 lg:h-150 w-full rounded-none" />
+        <Skeleton className="h-72 sm:h-96 md:h-120 lg:h-150 w-full rounded-none" />
       ) : (
         <Swiper
           slidesPerView={1}

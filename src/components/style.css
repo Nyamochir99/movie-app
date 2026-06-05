@@ -54,6 +54,13 @@
     font-size: 14px !important;
   }
   .swiper-pagination {
-    bottom: 16px !important;
+    bottom: 12px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .mySwiper .swiper-button-next,
+  .mySwiper .swiper-button-prev {
+    top: 42% !important;
   }
 }

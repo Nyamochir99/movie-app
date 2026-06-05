@@ -73,26 +73,39 @@ export function VidkingPlayer({
     };
   }, [isPlaying, isMobile]);
 
-  const providerTabs = (
+  const providerTabs = (variant: "page" | "overlay" = "page") => (
     <div className="flex flex-wrap gap-2">
-      {PROVIDERS.map((p) => (
-        <button
-          key={p.id}
-          type="button"
-          onClick={() => setProviderId(p.id)}
-          className={`h-8 px-3 rounded-md text-xs font-medium cursor-pointer border transition-colors ${
-            providerId === p.id
-              ? isDark
-                ? "bg-[#FAFAFA] text-[#18181B] border-[#FAFAFA]"
-                : "bg-[#18181B] text-white border-[#18181B]"
-              : isDark
-                ? "border-[#27272A] text-[#FAFAFA] hover:bg-[#27272A]"
-                : "border-[#E4E4E7] text-[#09090B] hover:bg-[#F4F4F5]"
-          }`}
-        >
-          {p.name}
-        </button>
-      ))}
+      {PROVIDERS.map((p) => {
+        const isActive = providerId === p.id;
+        const pageActive = isDark
+          ? "bg-[#FAFAFA] text-[#18181B] border-[#FAFAFA]"
+          : "bg-[#18181B] text-white border-[#18181B]";
+        const pageInactive = isDark
+          ? "border-[#27272A] text-[#FAFAFA] hover:bg-[#27272A]"
+          : "border-[#E4E4E7] text-[#09090B] hover:bg-[#F4F4F5]";
+        const overlayActive = "bg-white text-[#18181B] border-white";
+        const overlayInactive =
+          "border-white/40 text-white hover:bg-white/10 bg-black/30";
+
+        return (
+          <button
+            key={p.id}
+            type="button"
+            onClick={() => setProviderId(p.id)}
+            className={`h-8 px-3 rounded-md text-xs font-medium cursor-pointer border transition-colors ${
+              isActive
+                ? variant === "overlay"
+                  ? overlayActive
+                  : pageActive
+                : variant === "overlay"
+                  ? overlayInactive
+                  : pageInactive
+            }`}
+          >
+            {p.name}
+          </button>
+        );
+      })}
     </div>
   );
 
@@ -111,7 +124,7 @@ export function VidkingPlayer({
   if (isMobile && !isPlaying) {
     return (
       <div className="w-full my-6 sm:my-10 flex flex-col gap-3">
-        {providerTabs}
+        {providerTabs("page")}
         <div className="w-full aspect-video rounded-lg overflow-hidden relative">
           {posterUrl ? (
             <img
@@ -171,7 +184,7 @@ export function VidkingPlayer({
             Close
           </button>
         </div>
-        <div className="px-4 pb-3 shrink-0">{providerTabs}</div>
+        <div className="px-4 pb-3 shrink-0">{providerTabs("overlay")}</div>
         <div className="flex-1 min-h-0 w-full">{playerIframe}</div>
       </div>
     );
@@ -179,7 +192,7 @@ export function VidkingPlayer({
 
   return (
     <div className="w-full my-6 sm:my-10 flex flex-col gap-3">
-      {providerTabs}
+      {providerTabs("page")}
       <div className="w-full aspect-video">{playerIframe}</div>
     </div>
   );
