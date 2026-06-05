@@ -12,16 +12,8 @@ type VidkingPlayerProps = {
 const iframeAllow =
   "autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer";
 
-function getDesktopEmbedUrl(movieId: string) {
-  const params = new URLSearchParams({
-    color: "4338CA",
-    autoPlay: "false",
-  });
-  return `https://www.vidking.net/embed/movie/${movieId}?${params.toString()}`;
-}
-
-function getMobileEmbedUrl(movieId: string) {
-  return `https://vidsrc.mov/embed/movie/${movieId}`;
+function getEmbedUrl(movieId: string) {
+  return `https://ezvidapi.com/embed/movie/${movieId}`;
 }
 
 export function VidkingPlayer({
@@ -30,6 +22,7 @@ export function VidkingPlayer({
   posterUrl,
   isDark = true,
 }: VidkingPlayerProps) {
+  const embedUrl = getEmbedUrl(movieId);
   const [isMobile, setIsMobile] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -87,9 +80,6 @@ export function VidkingPlayer({
             </svg>
             Watch movie
           </button>
-          <p className="text-xs text-white/80 text-center max-w-xs">
-            Tap to open the mobile player
-          </p>
         </div>
       </div>
     );
@@ -112,7 +102,7 @@ export function VidkingPlayer({
         </div>
         <div className="flex-1 min-h-0 w-full">
           <iframe
-            src={getMobileEmbedUrl(movieId)}
+            src={embedUrl}
             title={title ? `Watch ${title}` : "Movie player"}
             allow={iframeAllow}
             allowFullScreen
@@ -127,7 +117,7 @@ export function VidkingPlayer({
   return (
     <div className="w-full aspect-video my-6 sm:my-10">
       <iframe
-        src={getDesktopEmbedUrl(movieId)}
+        src={embedUrl}
         title={title ? `Watch ${title}` : "Movie player"}
         allow={iframeAllow}
         allowFullScreen
