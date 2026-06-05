@@ -5,6 +5,7 @@ import { Badge } from "@/components/badge";
 import { Footer } from "@/components/footer";
 import { MovieList } from "@/components/movieList";
 import { Nav } from "@/components/nav";
+import { VidkingPlayer } from "@/components/vidkingPlayer";
 import { useTheme } from "@/context/ThemeContext";
 import axios from "axios";
 import { useParams } from "next/navigation";
@@ -202,13 +203,16 @@ export default function MovieDetail() {
               </div>
             </div>
           </div>
-          <div className="w-full aspect-video my-6 sm:my-10">
-            <iframe
-              src={"https://www.vidking.net/embed/movie/" + id}
-              allowFullScreen
-              className="w-full h-full rounded-lg"
-            ></iframe>
-          </div>
+          <VidkingPlayer
+            movieId={String(id)}
+            title={movie?.title}
+            posterUrl={
+              movie?.poster_path
+                ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                : undefined
+            }
+            isDark={isDark}
+          />
           <MovieList isDark={isDark} listName="moreLike" movieId={movie?.id} />
         </div>
       </div>
