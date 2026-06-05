@@ -35,3 +35,25 @@
 .swiper-pagination {
   bottom: 37px !important;
 }
+
+@media (max-width: 640px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    width: 32px !important;
+    height: 32px !important;
+    padding: 8px !important;
+  }
+  .swiper-button-next {
+    right: 12px !important;
+  }
+  .swiper-button-prev {
+    left: 12px !important;
+  }
+  .swiper-button-next::after,
+  .swiper-button-prev::after {
+    font-size: 14px !important;
+  }
+  .swiper-pagination {
+    bottom: 16px !important;
+  }
+}

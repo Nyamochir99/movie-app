@@ -53,7 +53,7 @@ export const SwiperMovie = ({ movie }: { movie: SearchMovie }) => {
 
   if (loading) {
     return (
-      <div className="w-full h-150 flex items-center justify-center">
+      <div className="w-full h-64 sm:h-96 md:h-120 lg:h-150 flex items-center justify-center">
         Loading...
       </div>
     );
@@ -62,17 +62,17 @@ export const SwiperMovie = ({ movie }: { movie: SearchMovie }) => {
 
   return (
     <div
-      className="w-full h-150 bg-cover bg-center bg-no-repeat flex items-center justify-center relative"
+      className="w-full h-64 sm:h-96 md:h-120 lg:h-150 bg-cover bg-center bg-no-repeat flex items-center justify-center relative"
       style={{
         backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,
       }}
     >
-      <div className="flex flex-col gap-4 w-7xl items-start">
+      <div className="flex flex-col gap-3 sm:gap-4 w-full max-w-7xl px-4 sm:px-6 lg:px-8 items-start">
         <div className="flex flex-col items-start">
-          <div className="text-base font-normal text-white">Now Playing:</div>
+          <div className="text-sm sm:text-base font-normal text-white">Now Playing:</div>
           <Link
             href={`/movie/${movie.id}`}
-            className="text-[36px] leading-10 font-bold text-white cursor-pointer"
+            className="text-xl sm:text-3xl lg:text-[36px] leading-tight sm:leading-10 font-bold text-white cursor-pointer"
           >
             {movie.title}
           </Link>
@@ -100,7 +100,7 @@ export const SwiperMovie = ({ movie }: { movie: SearchMovie }) => {
             </div>
           </div>
         </div>
-        <div className="w-75.5 text-xs font-normal text-[#FAFAFA]">
+        <div className="max-w-full sm:max-w-75.5 text-xs font-normal text-[#FAFAFA] line-clamp-3 sm:line-clamp-none">
           {movie.overview}
         </div>
 
@@ -129,14 +129,14 @@ export const SwiperMovie = ({ movie }: { movie: SearchMovie }) => {
             </div>
           </DialogTrigger>
           <DialogContent
-            className="fixed top-1/2 left-1/2 -translate-x-4/3 -translate-y-1/2 max-w-5xl w-[90vw] p-0 bg-black border-none z-100"
+            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-5xl w-[95vw] sm:w-[90vw] p-0 bg-black border-none z-100"
             showCloseButton={false}
           >
             <DialogTitle className="sr-only">
               Watch {movie.title} Trailer
             </DialogTitle>
             {trailerKey ? (
-              <div className="h-150 aspect-video">
+              <div className="w-full aspect-video">
                 <iframe
                   width=" 100%"
                   height="100%"

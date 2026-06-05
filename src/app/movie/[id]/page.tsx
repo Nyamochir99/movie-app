@@ -77,13 +77,13 @@ export default function MovieDetail() {
         <Nav isDark={isDark} />
       </div>
       <div
-        className={`w-full flex flex-col mt-13 mb-28 items-center ${isDark ? "text-[#FAFAFA]" : "text-[#09090B]"}`}
+        className={`w-full flex flex-col mt-8 sm:mt-13 mb-16 sm:mb-28 items-center ${isDark ? "text-[#FAFAFA]" : "text-[#09090B]"}`}
       >
-        <div className="w-7xl flex flex-col gap-6">
-          <div className="w-full flex justify-between items-center">
+        <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col gap-6">
+          <div className="w-full flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
             <div className="flex flex-col gap-1 items-start">
-              <div className="text-4xl font-bold">{movie?.title}</div>
-              <div className="text-lg font-normal">
+              <div className="text-2xl sm:text-3xl lg:text-4xl font-bold">{movie?.title}</div>
+              <div className="text-base sm:text-lg font-normal">
                 {movie?.release_date?.replaceAll("-", ".")} ·{" "}
                 {movie?.adult ? "R" : "PG"} ·{" "}
                 {movie?.runtime
@@ -135,25 +135,25 @@ export default function MovieDetail() {
               </div>
             </div>
           </div>
-          <div className="flex gap-8 w-full">
+          <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 w-full">
             <img
-              className="w-72.5 h-107 object-cover"
+              className="w-full max-w-72.5 mx-auto lg:mx-0 lg:w-72.5 h-auto lg:h-107 object-cover rounded-lg"
               src={`https://image.tmdb.org/t/p/original${movie?.poster_path}`}
               alt={movie?.title}
             />
 
-            <iframe
-              width="960"
-              height="428"
-              src={`https://www.youtube.com/embed/${trailerKey}?autoplay=0`}
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className="h-107 w-240"
-            ></iframe>
+            <div className="w-full flex-1 aspect-video lg:aspect-auto lg:h-107">
+              <iframe
+                src={`https://www.youtube.com/embed/${trailerKey}?autoplay=0`}
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full rounded-lg"
+              ></iframe>
+            </div>
           </div>
           <div className="flex flex-col gap-5 w-full items-start">
-            <div className="flex gap-3">
+            <div className="flex flex-wrap gap-2 sm:gap-3">
               {movie?.genres.map((genre) => (
                 <Badge key={genre.id} isDark={isDark} name={genre.name} />
               ))}
@@ -161,9 +161,9 @@ export default function MovieDetail() {
             <div className="text-base font-normal">{movie?.overview}</div>
             <div className={`flex flex-col gap-5 divide w-full`}>
               <div
-                className={`w-full flex gap-13 items-center pb-2 border-b ${isDark ? "border-b-[#27272A]" : "border-b-[#E4E4E7]"}`}
+                className={`w-full flex flex-col sm:flex-row sm:gap-13 gap-1 items-start sm:items-center pb-2 border-b ${isDark ? "border-b-[#27272A]" : "border-b-[#E4E4E7]"}`}
               >
-                <div className="text-[16px] leading-7 font-bold w-16">
+                <div className="text-[16px] leading-7 font-bold w-16 shrink-0">
                   Director
                 </div>
                 <div className="text-[16px] leading-6 font-normal flex">
@@ -171,12 +171,12 @@ export default function MovieDetail() {
                 </div>
               </div>
               <div
-                className={`w-full flex gap-13 items-center pb-2 border-b ${isDark ? "border-b-[#27272A]" : "border-b-[#E4E4E7]"}`}
+                className={`w-full flex flex-col sm:flex-row sm:gap-13 gap-1 items-start sm:items-center pb-2 border-b ${isDark ? "border-b-[#27272A]" : "border-b-[#E4E4E7]"}`}
               >
-                <div className="text-[16px] leading-7 font-bold w-16">
+                <div className="text-[16px] leading-7 font-bold w-16 shrink-0">
                   Writers
                 </div>
-                <div className="text-[16px] leading-6 font-normal flex gap-2">
+                <div className="text-[16px] leading-6 font-normal flex flex-wrap gap-2">
                   {writers.slice(0, 3).map((name, index) => (
                     <div className="flex gap-2" key={name.id + index + index}>
                       <div key={index}>{name.name}</div>
@@ -186,12 +186,12 @@ export default function MovieDetail() {
                 </div>
               </div>
               <div
-                className={`w-full flex gap-13 items-center pb-2 border-b ${isDark ? "border-b-[#27272A]" : "border-b-[#E4E4E7]"}`}
+                className={`w-full flex flex-col sm:flex-row sm:gap-13 gap-1 items-start sm:items-center pb-2 border-b ${isDark ? "border-b-[#27272A]" : "border-b-[#E4E4E7]"}`}
               >
-                <div className="text-[16px] leading-7 font-bold w-16">
+                <div className="text-[16px] leading-7 font-bold w-16 shrink-0">
                   Stars
                 </div>
-                <div className="text-[16px] leading-6 font-normal flex gap-2">
+                <div className="text-[16px] leading-6 font-normal flex flex-wrap gap-2">
                   {stars.slice(0, 3).map((name, index) => (
                     <div className="flex gap-2" key={name.id + index + index}>
                       <div key={index}>{name.name}</div>
@@ -202,13 +202,13 @@ export default function MovieDetail() {
               </div>
             </div>
           </div>
-          <iframe
-            src={"https://www.vidking.net/embed/movie/" + id}
-            width="1280"
-            height="600"
-            allowFullScreen
-            className="my-10"
-          ></iframe>
+          <div className="w-full aspect-video my-6 sm:my-10">
+            <iframe
+              src={"https://www.vidking.net/embed/movie/" + id}
+              allowFullScreen
+              className="w-full h-full rounded-lg"
+            ></iframe>
+          </div>
           <MovieList isDark={isDark} listName="moreLike" movieId={movie?.id} />
         </div>
       </div>

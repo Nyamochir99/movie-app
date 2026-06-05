@@ -60,7 +60,7 @@ export const SeeMore = ({
   }, [movieId, listName, page]);
 
   return (
-    <div className="w-7xl flex flex-col gap-8 mt-13 mb-19">
+    <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col gap-8 mt-8 sm:mt-13 mb-12 sm:mb-19">
       <div
         className={`${isDark ? "text-[#FAFAFA]" : "text-[#09090B]"} flex items-center justify-start`}
       >
@@ -78,7 +78,7 @@ export const SeeMore = ({
             </>
           ) : (
             <>
-              <div className="grid grid-cols-5 gap-[32.5px]">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6 lg:gap-[32.5px]">
                 {similar.map((movie) => (
                   <MoiveCard
                     isSearch={false}
@@ -99,7 +99,7 @@ export const SeeMore = ({
         </>
       ) : (
         <>
-          <div className="grid grid-cols-5 gap-[32.5px]">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6 lg:gap-[32.5px]">
             {movies.map((movie) => (
               <MoiveCard
                 isSearch={false}

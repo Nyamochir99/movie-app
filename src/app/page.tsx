@@ -18,7 +18,7 @@ export default function Home() {
       <div className=" relative z-10">
         <SwiperMain />
       </div>
-      <div className="w-full flex flex-col items-center gap-13 my-13">
+      <div className="w-full flex flex-col items-center gap-8 sm:gap-13 my-8 sm:my-13">
         <MovieList isDark={isDark} listName="upcoming" />
         <MovieList isDark={isDark} listName="popular" />
         <MovieList isDark={isDark} listName="top_rated" />

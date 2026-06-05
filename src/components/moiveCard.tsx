@@ -14,13 +14,11 @@ export const MoiveCard = ({
   return (
     <Link
       href={`/movie/${movie.id}`}
-      className={`${isSearch ? "w-46.25" : "w-57.5 "} cursor-pointer flex flex-col gap-1 rounded-lg items-start overflow-hidden ${isDark ? "bg-[#27272A]" : "bg-[#F4F4F5]"}`}
+      className={`w-full cursor-pointer flex flex-col gap-1 rounded-lg items-start overflow-hidden ${isDark ? "bg-[#27272A]" : "bg-[#F4F4F5]"}`}
     >
-      <div
-        className={`${isSearch ? "h-55" : "h-85"} overflow-hidden m-0 p-0 object-cover`}
-      >
+      <div className="w-full aspect-[2/3] overflow-hidden m-0 p-0">
         <img
-          className={`p-0 m-0 ${isSearch ? "w-full" : "h-85"} object-cover hover:scale-110 transition-transform duration-500`}
+          className="p-0 m-0 w-full h-full object-cover hover:scale-110 transition-transform duration-500"
           src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
           alt={movie.title}
         />

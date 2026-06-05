@@ -4,16 +4,16 @@ import { Logo } from "./logo";
 export const Footer = ({ isDark }: { isDark: boolean }) => {
   return (
     <div
-      className={`w-full h-70 py-10 flex justify-center ${isDark ? "bg-[#27272A]" : "bg-[#4338CA]"}`}
+      className={`w-full py-10 flex justify-center ${isDark ? "bg-[#27272A]" : "bg-[#4338CA]"}`}
     >
-      <div className="flex w-7xl justify-between">
+      <div className="flex flex-col lg:flex-row w-full max-w-7xl px-4 sm:px-6 lg:px-8 gap-10 lg:gap-0 lg:justify-between">
         <div className="flex flex-col justify-start gap-3">
           <Logo isDark={true} />
           <div className="text-[#FAFAFA] text-sm font-normal">
             © 2026 Movie Z. All Rights Reserved.
           </div>
         </div>
-        <div className="flex gap-24 text-[#FAFAFA] text-sm font-normal">
+        <div className="flex flex-col sm:flex-row gap-10 sm:gap-16 lg:gap-24 text-[#FAFAFA] text-sm font-normal">
           <div className="flex flex-col gap-3 justify-start">
             <div>Contact Information</div>
             <div className="flex flex-col gap-6 justify-start">
@@ -65,7 +65,7 @@ export const Footer = ({ isDark }: { isDark: boolean }) => {
           </div>
           <div className="flex flex-col gap-3 items-start">
             <div>Follow us</div>
-            <div className="flex gap-3 items-center justify-start">
+            <div className="flex flex-wrap gap-3 items-center justify-start">
               <div>Facebook</div>
               <div>Instagram</div>
               <div>Twitter</div>

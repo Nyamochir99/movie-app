@@ -3,7 +3,7 @@ import React from "react";
 
 export const Logo = ({ isDark }: { isDark: boolean }) => {
   return (
-    <Link href={`/`} className="flex items-center gap-2 cursor-pointer">
+    <Link href={`/`} className="flex items-center gap-2 cursor-pointer shrink-0">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="18"
@@ -19,7 +19,7 @@ export const Logo = ({ isDark }: { isDark: boolean }) => {
         />
       </svg>
       <span
-        className={`text-[16px] font-bold italic ${isDark ? "text-white" : "text-indigo-700"}`}
+        className={`text-sm sm:text-[16px] font-bold italic ${isDark ? "text-white" : "text-indigo-700"}`}
       >
         Movie Z
       </span>

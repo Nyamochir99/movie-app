@@ -29,8 +29,8 @@ export function PaginationMovie({
   );
 
   return (
-    <Pagination className={`my-10 ${isDark ? "text-white" : "text-black"}`}>
-      <PaginationContent>
+    <Pagination className={`my-6 sm:my-10 ${isDark ? "text-white" : "text-black"}`}>
+      <PaginationContent className="flex-wrap justify-center gap-1">
         {/* Өмнөх товч */}
         <PaginationItem>
           <PaginationPrevious

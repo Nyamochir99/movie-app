@@ -59,19 +59,19 @@ export const MovieList = ({
   return (
     <>
       {loading ? (
-        <div className="w-7xl flex flex-col gap-8">
+        <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col gap-8">
           <div className="flex items-center justify-between">
             <Skeleton className="h-8 w-60" />
             <Skeleton className="h-8 w-40" />
           </div>
-          <div className="grid grid-cols-5 gap-[32.5px]">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6 lg:gap-[32.5px]">
             {Array.from({ length: 10 }).map((_, i) => (
-              <Skeleton key={i} className="w-57.5 h-110" />
+              <Skeleton key={i} className="w-full aspect-[2/3.8]" />
             ))}
           </div>
         </div>
       ) : (
-        <div className="w-7xl flex flex-col gap-8">
+        <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col gap-8">
           <div
             className={`${isDark ? "text-[#FAFAFA]" : "text-[#09090B]"} flex items-center justify-between`}
           >
@@ -113,21 +113,25 @@ export const MovieList = ({
                 </>
               ) : (
                 <>
-                  <div className="flex gap-[32.5px]">
-                    {similar.slice(0, 5).map((movie) => (
-                      <MoiveCard
-                        isSearch={false}
-                        movie={movie}
-                        isDark={isDark}
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6 lg:gap-[32.5px]">
+                    {similar.slice(0, 6).map((movie, index) => (
+                      <div
                         key={movie.id}
-                      />
+                        className={index === 5 ? "block lg:hidden" : ""}
+                      >
+                        <MoiveCard
+                          isSearch={false}
+                          movie={movie}
+                          isDark={isDark}
+                        />
+                      </div>
                     ))}
                   </div>
                 </>
               )}
             </>
           ) : (
-            <div className="grid grid-cols-5 gap-[32.5px]">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6 lg:gap-[32.5px]">
               {listName === "upcoming"
                 ? movies
                     .slice(10)

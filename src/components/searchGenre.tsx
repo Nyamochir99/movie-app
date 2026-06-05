@@ -57,11 +57,11 @@ export const SearchGenre = ({
 
   return (
     <div
-      className={`mt-13 nb-19 w-7xl flex flex-col gap-8 ${isDark ? "text-[#FAFAFA]" : "text-[#09090B]"}`}
+      className={`mt-8 sm:mt-13 mb-12 sm:mb-19 w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col gap-8 ${isDark ? "text-[#FAFAFA]" : "text-[#09090B]"}`}
     >
-      <div className="text-3xl font-semibold">Search filter</div>
-      <div className="flex justify-between items-stretch">
-        <div className="flex flex-col gap-5 justify-start w-97">
+      <div className="text-2xl sm:text-3xl font-semibold">Search filter</div>
+      <div className="flex flex-col lg:flex-row lg:justify-between lg:items-stretch gap-8">
+        <div className="flex flex-col gap-5 justify-start w-full lg:w-97">
           <div className="text-2xl font-semibold">Genres</div>
           <div className="text-base font-normal">
             See lists of movies by genre
@@ -79,11 +79,11 @@ export const SearchGenre = ({
           </div>
         </div>
         <div
-          className={`border-l mb-10 mx-0 ${isDark ? "border-[#27272A]" : "border-[#e4e4e7]"}`}
+          className={`hidden lg:block border-l mb-10 mx-0 ${isDark ? "border-[#27272A]" : "border-[#e4e4e7]"}`}
         ></div>
-        <div className="flex flex-col gap-8 w-202">
+        <div className="flex flex-col gap-8 w-full lg:w-202">
           <div className="text-xl font-semibold">{`${genreData?.total_results} titles in "${activeGenreNames}"`}</div>
-          <div className="grid grid-cols-4 gap-y-6 gap-x-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-y-6 gap-x-4 sm:gap-x-6">
             {movies.map((movie) => (
               <MoiveCard
                 isSearch={true}

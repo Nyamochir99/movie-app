@@ -6,7 +6,7 @@ export const ThemeButton = () => {
   return (
     <div
       onClick={toggleTheme}
-      className={`w-9 h-9 rounded-[10px] flex items-center justify-center border cursor-pointer shadow-sm border-[#E4E4E7]`}
+      className={`shrink-0 w-9 h-9 rounded-[10px] flex items-center justify-center border cursor-pointer shadow-sm border-[#E4E4E7]`}
     >
       {isDark ? (
         <svg

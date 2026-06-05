@@ -15,14 +15,14 @@ export const MovieSearch = ({
       className={`w-full flex gap-4 p-2 cursor-pointer border-b pb-4 mb-2 ${isDark ? "border-b-[#27272A]" : "border-b-[#E4E4E7]"}`}
     >
       <img
-        className="w-17 h-25 object-cover rounded-md overflow-hidden cursor-pointer"
+        className="w-14 sm:w-17 h-20 sm:h-25 object-cover rounded-md overflow-hidden cursor-pointer shrink-0"
         src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
         alt={movie.title}
       />
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 flex-1 min-w-0">
         <div className="flex flex-col items-start">
           <div
-            className={`text-xl font-semibold cursor-pointer ${isDark ? "text-[#FAFAFA]" : "text-[#09090B]"} hover:underline`}
+            className={`text-base sm:text-xl font-semibold cursor-pointer line-clamp-2 ${isDark ? "text-[#FAFAFA]" : "text-[#09090B]"} hover:underline`}
           >
             {movie.title}
           </div>
@@ -56,19 +56,19 @@ export const MovieSearch = ({
             </div>
           </div>
         </div>
-        <div className="flex items-start justify-between w-113.5">
+        <div className="flex items-start justify-between w-full">
           <div
             className={`text-sm font-medium ${isDark ? "text-[#FAFAFA]" : "text-[#09090B]"}`}
           >
             {movie.release_date.slice(0, 4)}
           </div>
-          <div className="h-9 px-4 flex items-center gap-2">
+          <div className="h-9 px-1 sm:px-4 flex items-center gap-1 sm:gap-2 shrink-0">
             <div
-              className={`cursor-pointer text-sm font-medium ${isDark ? "text-[#FAFAFA]" : "text-[#09090B]"}`}
+              className={`cursor-pointer text-xs sm:text-sm font-medium whitespace-nowrap ${isDark ? "text-[#FAFAFA]" : "text-[#09090B]"}`}
             >
               See more
             </div>
-            <div className="h-4 w-4 flex items-center justify-center">
+            <div className="h-4 w-4 flex items-center justify-center shrink-0">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="11"

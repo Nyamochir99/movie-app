@@ -1,35 +1,59 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BadgeSVG } from "./badgeSVG";
-import { Badge } from "./badge";
 import { Genres, SearchMovie } from "@/app/types";
 import axios from "axios";
-import { Span } from "next/dist/trace";
 import { MovieSearch } from "./movieSearch";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "./ui/skeleton";
 
+const dropdownPanelClass = (isDark: boolean) =>
+  `border rounded-lg p-4 sm:p-5 shadow-lg ${
+    isDark ? "border-[#27272a] bg-[#09090B]" : "border-[#e4e4e7] bg-white"
+  }`;
+
+const dropdownPositionClass =
+  "absolute top-full left-0 right-0 mt-2 z-50 max-h-[min(70vh,32rem)] overflow-y-auto sm:w-144.25 sm:max-w-144.25 sm:right-auto sm:max-h-[min(80vh,36rem)]";
+
 export const SearchNav = ({ isDark }: { isDark: boolean }) => {
   const router = useRouter();
-  const [isActive, setIsActive] = useState<boolean>(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isGenreOpen, setIsGenreOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [genres, setGenres] = useState<Genres[]>([]);
   const [search, setSearch] = useState<string>("");
   const [movies, setMovies] = useState<SearchMovie[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [activeGenres, setActiveGenres] = useState<number[]>([]);
 
+  const closeAll = () => {
+    setIsGenreOpen(false);
+    setIsSearchOpen(false);
+  };
+
+  const showSearchResults =
+    Boolean(search.trim()) && isSearchOpen && !isGenreOpen;
+  const isDropdownOpen = isGenreOpen || showSearchResults;
+
   useEffect(() => {
+    if (!search.trim()) {
+      setMovies([]);
+      setLoading(false);
+      setIsSearchOpen(false);
+      return;
+    }
+    setLoading(true);
     axios
       .get(
         `https://api.themoviedb.org/3/search/movie?query=${search}&api_key=0bfe54d2ee447174877d5dffda1a2713`,
       )
       .then((res) => {
         setMovies(res.data.results);
-        setIsActive(false);
         setLoading(false);
       });
   }, [search]);
+
   useEffect(() => {
     axios
       .get(
@@ -39,6 +63,22 @@ export const SearchNav = ({ isDark }: { isDark: boolean }) => {
         setGenres(res.data.genres);
       });
   }, []);
+
+  useEffect(() => {
+    if (!isDropdownOpen) return;
+
+    const handlePointerDown = (e: PointerEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node)
+      ) {
+        closeAll();
+      }
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
+  }, [isDropdownOpen]);
 
   const handleGenre = (genreId: number) => {
     setActiveGenres((prev) => {
@@ -50,17 +90,30 @@ export const SearchNav = ({ isDark }: { isDark: boolean }) => {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && search.trim()) {
+      closeAll();
       router.push(`/search/${search}`);
+    }
+    if (e.key === "Escape") {
+      closeAll();
     }
   };
 
   return (
-    <div className="relative">
-      <div className="flex items-center gap-3">
-        <div
-          onClick={() => setIsActive(!isActive)}
-          className={`flex justify-center items-center border rounded-md px-4 py-2 gap-2 h-9 w-24.25 cursor-pointer border-[#E4E4E7]`}
+    <div
+      ref={containerRef}
+      className="relative w-full sm:w-auto sm:min-w-[28rem]"
+    >
+      <div className="flex items-center gap-2 w-full">
+        <button
+          type="button"
+          onClick={() => {
+            setIsGenreOpen((prev) => !prev);
+            setIsSearchOpen(false);
+          }}
+          aria-label="Open genres"
+          aria-expanded={isGenreOpen}
+          className="shrink-0 flex justify-center items-center border rounded-md px-2.5 sm:px-4 h-9 gap-1 sm:gap-2 cursor-pointer border-[#E4E4E7]"
         >
           <span className="h-4 w-4 flex justify-center items-center">
             <svg
@@ -78,12 +131,12 @@ export const SearchNav = ({ isDark }: { isDark: boolean }) => {
               />
             </svg>
           </span>
-          <span className={`text-[14px] font-medium leading-5 text-white`}>
+          <span className="hidden sm:inline text-[14px] font-medium leading-5 text-white">
             Genre
           </span>
-        </div>
-        <span className="relative">
-          <span className="h-4 w-4 flex items-center justify-center absolute left-3 top-2.5">
+        </button>
+        <div className="relative flex-1 min-w-0">
+          <span className="h-4 w-4 flex items-center justify-center absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="12"
@@ -98,43 +151,45 @@ export const SearchNav = ({ isDark }: { isDark: boolean }) => {
             </svg>
           </span>
           <input
-            // onBlur={() => setSearch("")}
             onKeyDown={handleKeyDown}
-            onClick={(e) => {
-              setIsActive(false);
-              setSearch(e.currentTarget.value);
+            onFocus={() => {
+              setIsGenreOpen(false);
+              if (search.trim()) setIsSearchOpen(true);
             }}
             onChange={(e) => {
-              setSearch(e.target.value);
+              const value = e.target.value;
+              setSearch(value);
+              setIsGenreOpen(false);
+              setIsSearchOpen(Boolean(value.trim()));
             }}
-            className={`h-9 w-94.75 border outline-none rounded-lg pr-3 pl-9.5 border-[#E4E4E7] text-[#fafafa] placeholder-[#a1a1aa]`}
+            className="h-9 w-full min-w-0 border outline-none rounded-lg pr-3 pl-9 border-[#E4E4E7] text-[#fafafa] placeholder-[#a1a1aa] text-sm sm:text-base"
             type="text"
             placeholder="Search..."
           />
-        </span>
+        </div>
       </div>
-      {isActive && (
-        <div className="absolute top-10 left-0">
-          <div
-            className={`border rounded-lg w-144.25 p-5 ${isDark ? "border-[#27272a] bg-[#09090B]" : "border-[#e4e4e7] bg-white"}`}
-          >
+
+      {isGenreOpen && (
+        <div className={dropdownPositionClass}>
+          <div className={dropdownPanelClass(isDark)}>
             <div
-              className={`flex flex-col w-53.25 gap-1 items-start ${isDark ? "text-[#FAFAFA]" : "text-[#09090B]"}`}
+              className={`flex flex-col gap-1 items-start ${isDark ? "text-[#FAFAFA]" : "text-[#09090B]"}`}
             >
-              <div className={`text-2xl font-semibold`}>Genres</div>
-              <div className="text-[16px] leading-6 font-normal">
+              <div className="text-xl sm:text-2xl font-semibold">Genres</div>
+              <div className="text-sm sm:text-[16px] leading-6 font-normal">
                 See lists of movies by genre
               </div>
             </div>
             <div
-              className={`h-px my-4 ${isDark ? "bg-[#27272a]" : "bg-[#E4E4E7]"}`}
-            ></div>
-            <div className="flex items-start content-start gap-4 flex-wrap">
+              className={`h-px my-3 sm:my-4 ${isDark ? "bg-[#27272a]" : "bg-[#E4E4E7]"}`}
+            />
+            <div className="flex items-start gap-2 sm:gap-4 flex-wrap">
               {genres.map((genre) => (
                 <Link
                   href={`/genre/${genre.id}`}
                   key={genre.id}
                   className="block"
+                  onClick={closeAll}
                 >
                   <BadgeSVG
                     genre={genre.name}
@@ -148,45 +203,45 @@ export const SearchNav = ({ isDark }: { isDark: boolean }) => {
           </div>
         </div>
       )}
-      {search && !isActive && (
-        <div className="absolute top-10 -left-9.5">
+
+      {showSearchResults && (
+        <div className={`${dropdownPositionClass} sm:left-auto sm:right-0`}>
           <div
-            className={`w-144.25 p-3 rounded-lg border min-h-24 flex flex-col ${isDark ? "border-[#27272a] bg-[#09090B]" : "border-[#e4e4e7] bg-white"}`}
+            className={`${dropdownPanelClass(isDark)} p-3 sm:p-4 min-h-24 flex flex-col`}
           >
-            <div>
-              {loading ? (
-                <div className="w-full flex gap-4 p-2 mb-2">
-                  <Skeleton className="w-17 h-25 rounded-md" />
-                  <div className="flex flex-col gap-px">
-                    <Skeleton className="h-7 w-30" />
-                    <Skeleton className="h-6 w-17" />
-                    <div className="flex justify-between w-113.5 mt-3">
-                      <Skeleton className="h-5 w-10" />
-                      <Skeleton className="h-5 w-20" />
-                    </div>
+            {loading ? (
+              <div className="w-full flex gap-3 sm:gap-4 p-2 mb-2">
+                <Skeleton className="w-14 sm:w-17 h-20 sm:h-25 rounded-md shrink-0" />
+                <div className="flex flex-col gap-px flex-1 min-w-0">
+                  <Skeleton className="h-6 sm:h-7 w-full max-w-30" />
+                  <Skeleton className="h-5 sm:h-6 w-17" />
+                  <div className="flex justify-between w-full mt-3">
+                    <Skeleton className="h-5 w-10" />
+                    <Skeleton className="h-5 w-20" />
                   </div>
                 </div>
-              ) : (
-                <>
-                  {movies.length === 0 && (
-                    <div
-                      className={`flex items-center justify-center h-18 text-[14px] font-medium ${isDark ? "text-[#FAFAFA]" : "text-[#09090B]"}`}
-                    >
-                      No results found.
-                    </div>
-                  )}
-                  {movies.slice(0, 5).map((movie) => (
-                    <MovieSearch movie={movie} key={movie.id} isDark={isDark} />
-                  ))}
-                  <Link
-                    href={`/search/${search}`}
-                    className={`text-sm cursor-pointer font-medium py-2 px-4 ${isDark ? "text-[#FAFAFA]" : "text-[#09090B]"}`}
+              </div>
+            ) : (
+              <>
+                {movies.length === 0 && (
+                  <div
+                    className={`flex items-center justify-center h-18 text-[14px] font-medium ${isDark ? "text-[#FAFAFA]" : "text-[#09090B]"}`}
                   >
-                    See all results for "{search}"
-                  </Link>
-                </>
-              )}
-            </div>
+                    No results found.
+                  </div>
+                )}
+                {movies.slice(0, 5).map((movie) => (
+                  <MovieSearch movie={movie} key={movie.id} isDark={isDark} />
+                ))}
+                <Link
+                  href={`/search/${search}`}
+                  onClick={closeAll}
+                  className={`text-sm cursor-pointer font-medium py-2 px-2 sm:px-4 truncate ${isDark ? "text-[#FAFAFA]" : "text-[#09090B]"}`}
+                >
+                  See all results for &quot;{search}&quot;
+                </Link>
+              </>
+            )}
           </div>
         </div>
       )}
